@@ -47,7 +47,7 @@ namespace InteractionsToolkit.Poser
             HandPose handpose = poseGameObject.GetComponent<HandPose>();
             if (handpose)
             {
-                PoseData = handpose.primaryPose;
+                PoseData = handpose.PrimaryPose;
             }
             else
             {

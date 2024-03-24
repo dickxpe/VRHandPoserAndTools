@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class HandPose : MonoBehaviour
 {
-    [SerializeField]
-    public PoseData primaryPose;
+    PoseData primaryPose;
+    PoseData secondaryPose;
 
-    [SerializeField]
-    public PoseData secondaryPose;
-
+    public PoseData PrimaryPose { get => primaryPose; set => primaryPose = value; }
+    public PoseData SecondaryPose { get => secondaryPose; set => SecondaryPose = value; }
 }

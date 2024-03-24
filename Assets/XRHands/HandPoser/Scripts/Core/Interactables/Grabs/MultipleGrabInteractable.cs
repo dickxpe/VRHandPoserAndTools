@@ -3,10 +3,12 @@ using UnityEngine;
 
 namespace InteractionsToolkit.Core
 {
-    [RequireComponent(typeof(HandPose))]
-    public class MultipleGrabInteractable : GrabInteractable
+    public class MultipleGrabInteractable : GrabInteractable, IHandPose
     {
+        [SerializeField]
         PoseData primaryPose;
+
+        [SerializeField]
         PoseData secondaryPose;
 
         [Header("Animation Settings")]
@@ -26,6 +28,10 @@ namespace InteractionsToolkit.Core
         private Vector3 secondaryOriginalLocalPosition;
         private Quaternion secondaryOriginalLocalRotation;
 
+        public PoseData PrimaryPose { get => primaryPose; set => primaryPose = value; }
+        public PoseData SecondaryPose { get => secondaryPose; set => secondaryPose = value; }
+
+
         protected void Awake()
         {
             AllowMultipleSelection = true;
@@ -37,8 +43,8 @@ namespace InteractionsToolkit.Core
             secondaryPoseContainer.transform.localPosition = Vector3.zero;
             secondaryPoseContainer.transform.localRotation = Quaternion.identity;
 
-            primaryPose = gameObject.GetComponent<HandPose>().primaryPose;
-            secondaryPose = gameObject.GetComponent<HandPose>().secondaryPose;
+            // primaryPose = gameObject.GetComponent<HandPose>().PrimaryPose;
+            // secondaryPose = gameObject.GetComponent<HandPose>().SecondaryPose;
 
             PrimaryZone.isTrigger = true;
             PrimaryZone.enabled = true;

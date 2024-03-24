@@ -36,7 +36,7 @@ namespace InteractionsToolkit.Poser
                     if (isEditing)
                     {
                         var handPose = poserHand.transform.GetComponentInParent<HandPose>();
-                        handPose.primaryPose = null;
+                        handPose.PrimaryPose = null;
                         if (handPose) Selection.SetActiveObjectWithContext(handPose, null);
                     }
                     else

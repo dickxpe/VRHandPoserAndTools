@@ -8,12 +8,9 @@ public class HandPoseCustomInspector : Editor
 {
     public override void OnInspectorGUI()
     {
+        DrawDefaultInspector();
         var myScript = target as HandPose;
-        myScript.primaryPose = (PoseData)EditorGUILayout.ObjectField("Primary pose", myScript.primaryPose, typeof(PoseData), true);
-        if (myScript.GetComponent<MultipleGrabInteractable>())
-        {
-            myScript.secondaryPose = (PoseData)EditorGUILayout.ObjectField("Secondary pose", myScript.secondaryPose, typeof(PoseData), true);
-        }
+        myScript.PrimaryPose = (PoseData)EditorGUILayout.ObjectField("Primary pose", myScript.PrimaryPose, typeof(PoseData), true);
 
     }
 }

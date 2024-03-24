@@ -1,11 +1,12 @@
 ﻿using InteractionsToolkit.Poser;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 namespace InteractionsToolkit.Core
 {
-    [RequireComponent(typeof(HandPose))]
-    public class SingleGrabInteractable : GrabInteractable
+    public class SingleGrabInteractable : GrabInteractable, IHandPose
     {
+        [SerializeField]
         PoseData pose;
 
         [Header("Animation Settings")]
@@ -13,9 +14,13 @@ namespace InteractionsToolkit.Core
 
         private PoserHand activeHand;
 
+        public PoseData PrimaryPose { get => pose; set => pose = value; }
+        public PoseData SecondaryPose { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+
         public void Awake()
         {
-            pose = gameObject.GetComponent<HandPose>().primaryPose;
+            //   pose = gameObject.GetComponent<HandPose>().PrimaryPose;
         }
 
         public override void HandleSelectEnter(BaseInteractor interactor)
