@@ -41,7 +41,7 @@ namespace InteractionsToolkit.Core
             else
             {
                 hoveredTargets.Add(interactor, new List<BaseInteractable> { interactable });
-                print($"Added {interactable.name} to {interactor.name} hover list");
+                //   print($"Added {interactable.name} to {interactor.name} hover list");
             }
 
             interactable.HandleHoverEnter(interactor);
@@ -54,7 +54,7 @@ namespace InteractionsToolkit.Core
                 // Already hovering current object
                 if (interactables.Remove(interactable))
                 {
-                    print($"Removed {interactable.name} from {interactor.name} hover list");
+
 
                     if (interactables.Count == 0)
                     {
@@ -98,7 +98,7 @@ namespace InteractionsToolkit.Core
 
                 if (hoveredItems.Remove(interactable))
                 {
-                    print($"{interactable} removed from hover list...");
+                    // print($"{interactable} removed from hover list...");
                     if (hoveredItems.Count == 0) hoveredTargets.Remove(interactor);
                 }
 

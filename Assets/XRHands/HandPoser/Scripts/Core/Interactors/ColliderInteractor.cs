@@ -23,9 +23,18 @@ namespace InteractionsToolkit.Core
 
         private void OnTriggerEnter(Collider other)
         {
+
             if (other.TryGetComponent(out BaseInteractable interactable))
             {
                 HandleHoverEnter(interactable);
+            }
+            else
+            {
+                BaseInteractable baseInteractable = other.gameObject.GetComponentInParent<BaseInteractable>();
+                if (baseInteractable)
+                {
+                    HandleHoverEnter(baseInteractable);
+                }
             }
         }
 
@@ -35,6 +44,14 @@ namespace InteractionsToolkit.Core
             {
                 HandleHoverEnter(interactable);
             }
+            else
+            {
+                BaseInteractable baseInteractable = other.gameObject.GetComponentInParent<BaseInteractable>();
+                if (baseInteractable)
+                {
+                    HandleHoverEnter(baseInteractable);
+                }
+            }
         }
 
         private void OnTriggerExit(Collider other)
@@ -42,6 +59,14 @@ namespace InteractionsToolkit.Core
             if (other.TryGetComponent(out BaseInteractable interactable))
             {
                 HandleHoverExit(interactable);
+            }
+            else
+            {
+                BaseInteractable baseInteractable = other.gameObject.GetComponentInParent<BaseInteractable>();
+                if (baseInteractable)
+                {
+                    HandleHoverExit(baseInteractable);
+                }
             }
         }
     }

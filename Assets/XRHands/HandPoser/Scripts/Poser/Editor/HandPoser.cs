@@ -22,38 +22,46 @@ namespace InteractionsToolkit.Poser
         [MenuItem("GameObject/Edit Hand Pose", false, 0)]
         static void EditHandPose(MenuCommand command)
         {
-            EditorWindow.GetWindow(typeof(HandPoser));
-            selectedGameObject = Selection.gameObjects[Selection.gameObjects.Length - 1];
-            poserTool = new PoserTool(selectedGameObject);
-            poserTool.PoseData = selectedGameObject.GetComponent<HandPose>().PrimaryPose;
 
-            PoserHandParent[] handParents = selectedGameObject.GetComponentsInChildren<PoserHandParent>(true);
-            bool createLeft = true;
-            bool createRight = true;
-            foreach (PoserHandParent handParent in handParents)
+            if (FindObjectOfType<PoserManager>())
             {
-                PoserHand hand = handParent.gameObject.GetComponentInChildren<PoserHand>(true);
-                if (hand)
+                EditorWindow.GetWindow(typeof(HandPoser));
+                selectedGameObject = Selection.gameObjects[Selection.gameObjects.Length - 1];
+                poserTool = new PoserTool(selectedGameObject);
+                poserTool.PoseData = selectedGameObject.GetComponent<IHandPose>().PrimaryPose;
+
+                PoserHandParent[] handParents = selectedGameObject.GetComponentsInChildren<PoserHandParent>(true);
+                bool createLeft = true;
+                bool createRight = true;
+                foreach (PoserHandParent handParent in handParents)
                 {
-                    if (hand.Type == Handedness.Left)
+                    PoserHand hand = handParent.gameObject.GetComponentInChildren<PoserHand>(true);
+                    if (hand)
                     {
-                        createLeft = false;
-                        poserTool.SetLeftHandAndParent(hand, handParent.gameObject);
-                    }
-                    else if (hand.Type == Handedness.Right)
-                    {
-                        createRight = false;
-                        poserTool.SetRightHandParent(hand, handParent.gameObject);
+                        if (hand.Type == Handedness.Left)
+                        {
+                            createLeft = false;
+                            poserTool.SetLeftHandAndParent(hand, handParent.gameObject);
+                        }
+                        else if (hand.Type == Handedness.Right)
+                        {
+                            createRight = false;
+                            poserTool.SetRightHandParent(hand, handParent.gameObject);
+                        }
                     }
                 }
+                if (createLeft)
+                {
+                    poserTool.ToggleLeftHand();
+                }
+                if (createRight)
+                {
+                    poserTool.ToggleRightHand();
+                }
             }
-            if (createLeft)
+            else
             {
-                poserTool.ToggleLeftHand();
-            }
-            if (createRight)
-            {
-                poserTool.ToggleRightHand();
+
             }
         }
 
@@ -105,7 +113,7 @@ namespace InteractionsToolkit.Poser
             {
                 GameObject selectedGO = Selection.gameObjects[Selection.gameObjects.Length - 1];
 
-                if (selectedGO.GetComponent<HandPose>())
+                if (selectedGO.GetComponent<IHandPose>() != null)
                 {
                     return true;
                 }
@@ -124,7 +132,7 @@ namespace InteractionsToolkit.Poser
             {
                 return true;
             }
-            else if (Selection.gameObjects[Selection.gameObjects.Length - 1].GetComponent<HandPose>())
+            else if (Selection.gameObjects[Selection.gameObjects.Length - 1].GetComponent<IHandPose>() != null)
             {
                 return false;
             }
@@ -136,14 +144,25 @@ namespace InteractionsToolkit.Poser
 
         void OnGUI()
         {
-            if (selectedGameObject != null)
+            if (!FindObjectOfType<PoserManager>())
+            {
+                GUILayout.Label("First add a PoserManager to your scene", EditorStyles.boldLabel);
+                EditorGUILayout.Space();
+
+                if (GUILayout.Button("Create PoserManager", EditorStyles.miniButton))
+                {
+                    GameObject poserManager = new GameObject("PoserManager");
+                    poserManager.AddComponent<PoserManager>();
+                }
+            }
+            else if (selectedGameObject != null)
             {
                 Undo.RecordObject(selectedGameObject, "Value changed");
                 EditorGUI.BeginChangeCheck();
                 selectedGameObject = (GameObject)EditorGUILayout.ObjectField(selectedGameObject, typeof(GameObject), true);
                 if (EditorGUI.EndChangeCheck())
                 {
-                    poserTool.PoseData = selectedGameObject.GetComponent<HandPose>().PrimaryPose;
+                    poserTool.PoseData = selectedGameObject.GetComponent<IHandPose>().PrimaryPose;
                     Debug.Log("Objectfield" + selectedGameObject.name);
 
                 }
@@ -152,8 +171,8 @@ namespace InteractionsToolkit.Poser
                 poserTool.PoseData = (PoseData)EditorGUILayout.ObjectField(poserTool.PoseData, typeof(PoseData), true);
                 if (EditorGUI.EndChangeCheck())
                 {
-                    HandPose handPose = selectedGameObject.GetComponent<HandPose>();
-                    if (handPose)
+                    HandPose handPose = (HandPose)selectedGameObject.GetComponent<IHandPose>();
+                    if (handPose != null)
                     {
                         handPose.PrimaryPose = poserTool.PoseData;
                     }
@@ -187,6 +206,10 @@ namespace InteractionsToolkit.Poser
                     DrawEditSection();
                     DrawSaveSection();
                 }
+            }
+            else
+            {
+                GUILayout.Label("No Pose selected", EditorStyles.boldLabel);
             }
 
         }
@@ -397,7 +420,7 @@ namespace InteractionsToolkit.Poser
                     poserTool.SavePose(path.ConvertToProjectRelativePath());
 
                     poserTool.PoseData = AssetDatabase.LoadAssetAtPath<PoseData>(path.ConvertToProjectRelativePath());
-                    selectedGameObject.GetComponent<HandPose>().PrimaryPose = poserTool.PoseData;
+                    selectedGameObject.GetComponent<IHandPose>().PrimaryPose = poserTool.PoseData;
                 }
             }
         }

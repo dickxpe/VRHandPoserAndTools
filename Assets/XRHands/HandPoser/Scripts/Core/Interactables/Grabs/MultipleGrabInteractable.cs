@@ -5,6 +5,7 @@ namespace InteractionsToolkit.Core
 {
     public class MultipleGrabInteractable : GrabInteractable, IHandPose
     {
+        [Header("Pose Settings")]
         [SerializeField]
         PoseData primaryPose;
 
@@ -32,8 +33,9 @@ namespace InteractionsToolkit.Core
         public PoseData SecondaryPose { get => secondaryPose; set => secondaryPose = value; }
 
 
-        protected void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             AllowMultipleSelection = true;
 
             if (LogMessages()) return;

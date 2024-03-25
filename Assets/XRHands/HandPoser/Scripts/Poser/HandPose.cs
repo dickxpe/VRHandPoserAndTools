@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using InteractionsToolkit.Poser;
 using UnityEngine;
 
-public class HandPose : MonoBehaviour
+public class HandPose : MonoBehaviour, IHandPose
 {
     PoseData primaryPose;
     PoseData secondaryPose;

@@ -10,6 +10,15 @@ public class SequenceChecker : MonoBehaviour
     [SerializeField]
     int[] sequence;
 
+
+    [SerializeField]
+    UnityEvent checkEvent;
+
+
+    [SerializeField]
+    UnityEvent checkCorrectEvent;
+
+
     [SerializeField]
     UnityEvent completedEvent;
 
@@ -21,8 +30,10 @@ public class SequenceChecker : MonoBehaviour
     {
         if (!sequenceCompleted)
         {
+            checkEvent.Invoke();
             if (sequence[position] == id)
             {
+                checkCorrectEvent.Invoke();
                 gameObject.GetComponent<ICallbackEvent>().CallBack();
                 position++;
                 if (position == sequence.Length)

@@ -44,10 +44,18 @@ namespace InteractionsToolkit.Core
                     renderer.enabled = false;
                 }
                 poserHand.ghostHand.gameObject.SetActive(true);
+                poserHand.ghostHand.transform.SetParent(null);
                 poserHand.ghostHand.SetPose(pose, poseDuration);
-                //poserHand.ghostHand.transform.SetParent(transform, true);
-                //ApplyHandTransform(poserHand.ghostHand.transform, poserHand.AttachTransform);
-
+                if (attachTransform)
+                {
+                    poserHand.ghostHand.GetComponent<GhostHand>().followObject = attachTransform;
+                }
+                else
+                {
+                    poserHand.ghostHand.GetComponent<GhostHand>().followObject = transform;
+                }
+                // poserHand.ghostHand.transform.SetParent(transform, true);
+                ApplyHandTransform(poserHand.ghostHand.transform, poserHand.AttachTransform);
                 // StopAllCoroutines();
                 // StartCoroutine(AttachHandRoutine(poserHand.ghostHand.transform, Vector3.zero, Quaternion.identity, poseDuration));
 

@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1223ed26bde8450fbed0e990f550f9b7, type: 3}
+  m_Name: Cable
+  m_EditorClassIdentifier: 
+  LeftJoints:
+    poseJointGroups:
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: -0.21559502, y: -0.30292165, z: 0.58474517, w: 0.7209926}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.46507874, y: 0.106589824, z: -0.020717839, w: 0.8785848}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.4278486, y: -0.12938924, z: 0.043303583, w: 0.8934925}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.4677866, y: -0.09139386, z: -0.09433898, w: 0.87402695}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.35093746, y: -0.0685644, z: -0.0707738, w: 0.9311997}
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.5717186, y: -0.05123917, z: -0.06233428, w: 0.81647223}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.4171594, y: -0.0007705925, z: -0.013038665, w: 0.9087395}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.25976065, y: -0.00047983608, z: -0.008119017, w: 0.96563876}
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.5768677, y: 0.080087475, z: -0.2302252, w: 0.7796192}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.3445623, y: 0.13474816, z: 0.056949534, w: 0.9272953}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.24128172, y: 0.09435849, z: 0.03987908, w: 0.96503335}
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.5562619, y: 0.15765163, z: -0.31154224, w: 0.75409555}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.3673793, y: 0.18148772, z: 0.2421367, w: 0.8794683}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.12609333, y: 0.062290862, z: 0.083106875, w: 0.98656654}
+  RightJoints:
+    poseJointGroups:
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: -0.21559502, y: -0.30292165, z: 0.58474517, w: 0.7209926}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.46507874, y: 0.106589824, z: -0.020717839, w: 0.8785848}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.4278486, y: -0.12938924, z: 0.043303583, w: 0.8934925}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.4677866, y: -0.09139386, z: -0.09433898, w: 0.87402695}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.35093746, y: -0.0685644, z: -0.0707738, w: 0.9311997}
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.5717186, y: -0.05123917, z: -0.06233428, w: 0.81647223}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.4171594, y: -0.0007705925, z: -0.013038665, w: 0.9087395}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.25976065, y: -0.00047983608, z: -0.008119017, w: 0.96563876}
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.5768677, y: 0.080087475, z: -0.2302252, w: 0.7796192}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.3445623, y: 0.13474816, z: 0.056949534, w: 0.9272953}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.24128172, y: 0.09435849, z: 0.03987908, w: 0.96503335}
+    - poseJoints:
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.5562619, y: 0.15765163, z: -0.31154224, w: 0.75409555}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.3673793, y: 0.18148772, z: 0.2421367, w: 0.8794683}
+      - LocalPosition: {x: 0, y: 0, z: 0}
+        LocalRotation: {x: 0.12609333, y: 0.062290862, z: 0.083106875, w: 0.98656654}
+  LeftParentTransform:
+    LocalPosition: {x: -0, y: 0, z: -1.007}
+    LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  RightParentTransform:
+    LocalPosition: {x: 0, y: 0, z: -1.007}
+    LocalRotation: {x: 0, y: -0, z: -0, w: -1}

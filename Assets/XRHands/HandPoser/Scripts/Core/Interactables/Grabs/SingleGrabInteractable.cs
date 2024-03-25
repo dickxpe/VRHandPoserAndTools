@@ -1,11 +1,13 @@
-﻿using InteractionsToolkit.Poser;
+using InteractionsToolkit.Poser;
 using Unity.VisualScripting.Dependencies.NCalc;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine;
 
 namespace InteractionsToolkit.Core
 {
     public class SingleGrabInteractable : GrabInteractable, IHandPose
     {
+        [Header("Pose Settings")]
         [SerializeField]
         PoseData pose;
 
@@ -17,12 +19,6 @@ namespace InteractionsToolkit.Core
         public PoseData PrimaryPose { get => pose; set => pose = value; }
         public PoseData SecondaryPose { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-
-        public void Awake()
-        {
-            //   pose = gameObject.GetComponent<HandPose>().PrimaryPose;
-        }
-
         public override void HandleSelectEnter(BaseInteractor interactor)
         {
 
@@ -33,6 +29,7 @@ namespace InteractionsToolkit.Core
                     activeHand = newHand;
                     activeHand.SetIsPosing(true);
                     SetPose(activeHand, pose, AttachDuration);
+
                 }
             }
         }
@@ -40,7 +37,6 @@ namespace InteractionsToolkit.Core
         public override void HandleSelectExit(BaseInteractor interactor)
         {
             base.HandleSelectExit(interactor);
-            Debug.Log("HandleSelectExit");
             SkinnedMeshRenderer skinnedRenderer = activeHand.GetComponentInChildren<SkinnedMeshRenderer>();
             skinnedRenderer.enabled = true;
             MeshRenderer[] renderers = activeHand.GetComponentsInChildren<MeshRenderer>();
@@ -57,12 +53,14 @@ namespace InteractionsToolkit.Core
                 activeHand.ghostHand.transform.localPosition = activeHand.transform.localPosition;
                 activeHand.ghostHand.transform.localRotation = activeHand.transform.localRotation;
                 activeHand.ghostHand.transform.localScale = new Vector3(1, 1, 1);
+                activeHand.ghostHand.GetComponent<GhostHand>().followObject = null;
                 activeHand.ghostHand.gameObject.SetActive(false);
             }
             else
             {
                 DetachInteractable(transform);
             }
+            activeHand.AttachTransform.localPosition = Vector3.zero;
             activeHand = null;
 
         }

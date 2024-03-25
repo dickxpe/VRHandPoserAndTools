@@ -4,13 +4,7 @@
 // Edited by Peter Dickx https://github.com/dickxpe
 
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Dependencies.Sqlite;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Rendering;
 
 [ExecuteInEditMode]

@@ -42,8 +42,6 @@ namespace InteractionsToolkit.Poser
             poseGameObject = gameObject;
             if (!manager) manager = FindObjectOfType<PoserManager>();
 
-            //Change so it works for single and multiple grab poses
-
             HandPose handpose = poseGameObject.GetComponent<HandPose>();
             if (handpose)
             {

@@ -64,7 +64,7 @@ public class AnimateHandOnInput : MonoBehaviour
         if (timePassed >= 0.05f)
         {
             timePassed = 0;
-            float triggerValue = pinchAnimationAction.action.ReadValue<float>();
+            float triggerValue = IndexAnimationAction.action.ReadValue<float>();
 
             if (Mathf.Abs(triggerValue - prevTriggerValue) > 0.01f)
             {
@@ -111,6 +111,12 @@ public class AnimateHandOnInput : MonoBehaviour
             prevGrabValue = grabValue;
             prevTriggerValue = triggerValue;
             prevThumbValue = thumbValue;
+            // if (grabValue > 0)
+            //     Debug.Log(grabValue);
+            // if (triggerValue > 0)
+            //     Debug.Log(triggerValue);
+            // if (thumbValue > 0)
+            //     Debug.Log(thumbValue);
         }
     }
 }

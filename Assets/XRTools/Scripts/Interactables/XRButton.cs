@@ -38,7 +38,7 @@ public class XRButton : MonoBehaviour, ICallbackEvent
         startPos = knob.localPosition;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         knob.localPosition = new Vector3(0, knob.localPosition.y, 0);
 
