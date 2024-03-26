@@ -10,10 +10,10 @@ public class TriggerEvent : MonoBehaviour
     UltEvent onTriggerEnter;
 
     [SerializeField]
-    UnityEvent onTriggerStay;
+    UltEvent onTriggerStay;
 
     [SerializeField]
-    UnityEvent onTriggerExit;
+    UltEvent onTriggerExit;
 
     void OnTriggerEnter(Collider other)
     {

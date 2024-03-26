@@ -1,20 +1,18 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using UltEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class XRLever : MonoBehaviour
 {
     [SerializeField]
-    UnityEvent OnEvent;
+    UltEvent OnEvent;
 
     [SerializeField]
-    UnityEvent OffEvent;
+    UltEvent OffEvent;
 
     [Serializable]
-    public class FloatEvent : UnityEvent<float> { }
+    public class FloatEvent : UltEvent<float> { }
 
     [SerializeField]
     FloatEvent valueChangedEvent;

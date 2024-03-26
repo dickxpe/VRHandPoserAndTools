@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UltEvents;
 
 public class SequenceChecker : MonoBehaviour
 {
@@ -12,15 +13,15 @@ public class SequenceChecker : MonoBehaviour
 
 
     [SerializeField]
-    UnityEvent checkEvent;
+    UltEvent checkEvent;
 
 
     [SerializeField]
-    UnityEvent checkCorrectEvent;
+    UltEvent checkCorrectEvent;
 
 
     [SerializeField]
-    UnityEvent completedEvent;
+    UltEvent completedEvent;
 
     bool sequenceCompleted;
 

@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using UltEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class CollisionEvent : MonoBehaviour
 {
     [SerializeField]
-    UnityEvent onCollisionEnter;
+    UltEvent onCollisionEnter;
     [SerializeField]
-    UnityEvent onCollisionStay;
+    UltEvent onCollisionStay;
     [SerializeField]
-    UnityEvent onCollisionExit;
+    UltEvent onCollisionExit;
 
 
     void OnCollisionEnter(Collision collision)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UltEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +12,7 @@ public class ConditionsChecker : MonoBehaviour
     bool allConditionsCompleted;
 
     [SerializeField]
-    UnityEvent completedEvent;
+    UltEvent completedEvent;
 
     public void CompleteCondition(int id)
     {
