@@ -84,7 +84,7 @@ namespace InteractionsToolkit.Core
         public void HandleInteractionPressedWithNoValidTargets()
         {
             // trigger pose, event, etc...
-            print($"{name} notified of idle selection");
+            //print($"{name} notified of idle selection");
         }
 
         [UsedImplicitly]
@@ -104,7 +104,7 @@ namespace InteractionsToolkit.Core
         [UsedImplicitly]
         public void NotifySelectExit(BaseInteractable interactable)
         {
-            print($"{name} notified of selection exit");
+            // print($"{name} notified of selection exit");
             Debug.Log(interactable.gameObject.name);
             if (interactable.ObjectToHand)
             {

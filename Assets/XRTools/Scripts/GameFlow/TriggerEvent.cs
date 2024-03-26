@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UltEvents;
 
 public class TriggerEvent : MonoBehaviour
 {
     [SerializeField]
-    UnityEvent onTriggerEnter;
+    UltEvent onTriggerEnter;
 
     [SerializeField]
     UnityEvent onTriggerStay;

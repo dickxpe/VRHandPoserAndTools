@@ -15,7 +15,7 @@ namespace InteractionsToolkit.Poser
         private bool setDistance;
         private float distance;
         private Vector2 minMaxValues;
-        private float scrubValue;
+        private static float scrubValue = 1;
         static PoserTool poserTool;
         static GameObject selectedGameObject = null;
 
@@ -58,6 +58,8 @@ namespace InteractionsToolkit.Poser
                 {
                     poserTool.ToggleRightHand();
                 }
+                ResetScrubValue(1);
+                poserTool.ShowPose();
             }
             else
             {
@@ -360,6 +362,7 @@ namespace InteractionsToolkit.Poser
             {
                 ResetScrubValue(1);
                 poserTool.MirrorLeftToRight();
+                Debug.Log("Mirror");
             }
             GUI.enabled = true;
 
@@ -412,7 +415,6 @@ namespace InteractionsToolkit.Poser
             EditorGUILayout.Space();
             if (GUILayout.Button("Save New Pose", EditorStyles.miniButton))
             {
-                ResetScrubValue(1);
 
                 var path = EditorUtility.SaveFilePanel("Save as asset", "Assets/", "Pose", "asset");
                 if (path.Length != 0)
@@ -425,7 +427,7 @@ namespace InteractionsToolkit.Poser
             }
         }
 
-        private void ResetScrubValue(float value)
+        private static void ResetScrubValue(float value)
         {
             if (!poserTool.PoseData) return;
 

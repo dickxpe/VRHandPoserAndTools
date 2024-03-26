@@ -74,7 +74,7 @@ namespace InteractionsToolkit.Core
 
         public virtual void HandleSelectExit(BaseInteractor interactor)
         {
-            print($"{interactor.name} select exited {name}");
+            //print($"{interactor.name} select exited {name}");
         }
     }
 }
