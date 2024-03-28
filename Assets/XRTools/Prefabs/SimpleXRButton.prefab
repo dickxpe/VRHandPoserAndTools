@@ -288,44 +288,9 @@ MonoBehaviour:
   pressTreshold: 0.1
   maxPress: 0.4
   downEvent:
-    _PersistentCalls:
-    - _Target: {fileID: 0}
-      _MemberName: CompleteCondition
-      _PersistentArguments:
-      - _Type: 3
-        _Int: 0
-        _String: 
-        _X: 0
-        _Y: 0
-        _Z: 0
-        _W: 0
-        _Object: {fileID: 0}
-    - _Target: {fileID: 3446755625869464540}
-      _MemberName: set_sharedMaterial
-      _PersistentArguments:
-      - _Type: 13
-        _Int: 0
-        _String: UnityEngine.Material, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-        _X: 0
-        _Y: 0
-        _Z: 0
-        _W: 0
-        _Object: {fileID: 2100000, guid: 798852d38a74cdc4aa5a1a0d5eb43673, type: 2}
+    _PersistentCalls: []
   upEvent:
-    _PersistentCalls:
-    - _Target: {fileID: 3446755625869464540}
-      _MemberName: set_sharedMaterial
-      _PersistentArguments:
-      - _Type: 13
-        _Int: 0
-        _String: UnityEngine.Material, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-        _X: 0
-        _Y: 0
-        _Z: 0
-        _W: 0
-        _Object: {fileID: 2100000, guid: 7bd3038831af8884d8a9708483667724, type: 2}
+    _PersistentCalls: []
   callbackEvent:
     _PersistentCalls: []
 --- !u!33 &97538046185155954

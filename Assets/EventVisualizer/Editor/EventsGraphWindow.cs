@@ -46,7 +46,7 @@ namespace EventVisualizer.Base
 			EditorUtility.SetDirty(_graph);
 		}
 
-		private static readonly string[] toolbarStrings = new string[] {"Rebuild on selected Hierarchy", "Rebuild JUST selected", "Update connections" };
+		private static readonly string[] toolbarStrings = new string[] { "Rebuild entire Hierarchy", "Rebuild selected Hierarchy", "Rebuild JUST selected", "Update connections" };
 
 		void OnGUI()
 		{
@@ -69,17 +69,18 @@ namespace EventVisualizer.Base
 				var e = Event.current;
 				if (e.type == EventType.MouseDown && e.clickCount == 1)
 					_graphGUI.ClearSelection();
-				
+
 				EditorZoomArea.End();
 			}
 
 
 			// Status bar
-			GUILayout.BeginArea(new Rect(0, 0, width, kBarHeight+5));
+			GUILayout.BeginArea(new Rect(0, 0, width, kBarHeight + 5));
 			int result = GUILayout.Toolbar(-1, toolbarStrings);
-			if(result == 0) RebuildGraphOnSelected(true);
-			else if (result == 1) RebuildGraphOnSelected(false);
-			else if(result == 2) RefreshGraphConnections();
+			if (result == 0) RebuildGraph(FindObjectsOfType<GameObject>(), true);
+			else if (result == 1) RebuildGraphOnSelected(true);
+			else if (result == 2) RebuildGraphOnSelected(false);
+			else if (result == 3) RefreshGraphConnections();
 			GUILayout.EndArea();
 
 			const float maxWidth = 200;
@@ -101,25 +102,30 @@ namespace EventVisualizer.Base
 		public GUISkin guiSkin;
 
 
-		public class SavedPrefBool {
+		public class SavedPrefBool
+		{
 			public readonly string name;
 			protected readonly bool defaultValue;
 			protected bool value;
 			private bool ready = false;
 
-			public SavedPrefBool(string name, bool defaultValue) {
+			public SavedPrefBool(string name, bool defaultValue)
+			{
 				this.name = name;
 				this.defaultValue = defaultValue;
 			}
 
-			public bool Get() {
-				if (!ready) {
+			public bool Get()
+			{
+				if (!ready)
+				{
 					ready = true;
 					value = EditorPrefs.GetBool(name, defaultValue);
 				}
 				return value;
 			}
-			public void Set(bool value) {
+			public void Set(bool value)
+			{
 				this.value = value;
 				EditorPrefs.SetBool(name, value);
 			}
@@ -185,26 +191,32 @@ namespace EventVisualizer.Base
 		}
 
 
-		void OnFocus() {
+		void OnFocus()
+		{
 			RemoveCallbacks();
 			AddCallbacks();
 		}
 
-		void OnDestroy() {
+		void OnDestroy()
+		{
 			RemoveCallbacks();
 		}
 
-		void AddCallbacks() {
+		void AddCallbacks()
+		{
 			SceneView.onSceneGUIDelegate += OnSceneGUI;
 			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
 		}
-		void RemoveCallbacks() {
+		void RemoveCallbacks()
+		{
 			SceneView.onSceneGUIDelegate -= OnSceneGUI;
 			EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 		}
 
-		void OnPlayModeStateChanged(PlayModeStateChange mode) {
-			switch (mode) {
+		void OnPlayModeStateChanged(PlayModeStateChange mode)
+		{
+			switch (mode)
+			{
 				case PlayModeStateChange.EnteredEditMode:
 					break;
 				case PlayModeStateChange.EnteredPlayMode:
@@ -213,14 +225,16 @@ namespace EventVisualizer.Base
 			}
 		}
 
-		private struct Bezier {
+		private struct Bezier
+		{
 			public enum Tangent { None, Auto, Positive, Negative, PositiveUnscaled, NegativeUnscaled }
 			public Vector2 start;
 			public Vector2 end;
 			public Tangent startTangent, endTangent;
 		}
 
-		private struct EventBox {
+		private struct EventBox
+		{
 			public EventCall ev;
 			public GUIContent content;
 			public Rect rect;
@@ -228,25 +242,31 @@ namespace EventVisualizer.Base
 
 		private Dictionary<EventCall, Bezier> beziersToDraw = new Dictionary<EventCall, Bezier>();
 		private List<EventBox> boxesToDraw = new List<EventBox>();
-		void OnSceneGUI(SceneView sceneView) {
+		void OnSceneGUI(SceneView sceneView)
+		{
 			Handles.BeginGUI();
 			GUI.skin = guiSkin;
-			
-			foreach (var elem in NodeData.Nodes) {
+
+			foreach (var elem in NodeData.Nodes)
+			{
 				GameObject entity = elem.Entity as GameObject;
-				if (null != entity) {
+				if (null != entity)
+				{
 					bool isEntitySelected = CheckSelection(entity.gameObject);
 					bool behindScreen;
 					var senderPos2D = WorldToGUIPoint(entity.transform.position, SceneView.currentDrawingSceneView.camera.transform.position, out behindScreen);
 
-					if (isEntitySelected) {
+					if (isEntitySelected)
+					{
 						StringBuilder sb = new StringBuilder();
-						for (int i = 0; i < elem.Inputs.Count; i++) {
+						for (int i = 0; i < elem.Inputs.Count; i++)
+						{
 							var ev = elem.Inputs[i];
 							GameObject receiver = ev.receiver as GameObject;
 							GameObject sender = ev.sender as GameObject;
 
-							if (null != sender && receiver != ev.sender) {
+							if (null != sender && receiver != ev.sender)
+							{
 								if (behindScreen) senderPos2D = WorldToGUIPoint(entity.transform.position, sender.transform.position, out behindScreen);
 								var rect = DrawEventBox(sb, "➜● ", boxesToDraw, ev, ref senderPos2D, behindScreen);
 								sb.Length = 0;
@@ -258,10 +278,12 @@ namespace EventVisualizer.Base
 								beziersToDraw[ev] = b;
 							}
 						}
-						for (int i = 0; i < elem.Inputs.Count; i++) {
+						for (int i = 0; i < elem.Inputs.Count; i++)
+						{
 							var ev = elem.Inputs[i];
 							GameObject receiver = ev.receiver as GameObject;
-							if (receiver == ev.sender) {
+							if (receiver == ev.sender)
+							{
 								if (behindScreen) continue; // Don't draw
 								var rect = DrawEventBox(sb, " ●  ", boxesToDraw, ev, ref senderPos2D, behindScreen);
 								sb.Length = 0;
@@ -275,10 +297,12 @@ namespace EventVisualizer.Base
 								beziersToDraw[ev] = b;
 							}
 						}
-						for (int i = 0; i < elem.Outputs.Count; i++) {
+						for (int i = 0; i < elem.Outputs.Count; i++)
+						{
 							var ev = elem.Outputs[i];
 							GameObject receiver = ev.receiver as GameObject;
-							if (null != receiver && receiver != ev.sender) {
+							if (null != receiver && receiver != ev.sender)
+							{
 								if (behindScreen) senderPos2D = WorldToGUIPoint(entity.transform.position, receiver.transform.position, out behindScreen);
 								var rect = DrawEventBox(sb, "●➜ ", boxesToDraw, ev, ref senderPos2D, behindScreen);
 								sb.Length = 0;
@@ -291,17 +315,21 @@ namespace EventVisualizer.Base
 							}
 						}
 					}
-					else {
-						for (int i = 0; i < elem.Inputs.Count; i++) {
+					else
+					{
+						for (int i = 0; i < elem.Inputs.Count; i++)
+						{
 							var ev = elem.Inputs[i];
 							GameObject sender = ev.sender as GameObject;
-							if (null != sender) {
+							if (null != sender)
+							{
 								bool isSenderSelected = CheckSelection(sender.gameObject);
 
-								if (isSenderSelected || ev.lastTimeExecuted + EdgeTriggersTracker.TimeToLive >= EditorApplication.timeSinceStartup) {
+								if (isSenderSelected || ev.lastTimeExecuted + EdgeTriggersTracker.TimeToLive >= EditorApplication.timeSinceStartup)
+								{
 									if (behindScreen) senderPos2D = WorldToGUIPoint(entity.transform.position, sender.transform.position, out behindScreen);
 									var localEnd2D = senderPos2D + new Vector2(0, separation * ev.nodeSender.Inputs.IndexOf(ev));
-									
+
 									Bezier b;
 									beziersToDraw.TryGetValue(ev, out b);
 									b.endTangent = behindScreen ? Bezier.Tangent.None : Bezier.Tangent.Auto;
@@ -310,17 +338,20 @@ namespace EventVisualizer.Base
 								}
 							}
 						}
-						
-						for (int i = 0; i < elem.Outputs.Count; i++) {
+
+						for (int i = 0; i < elem.Outputs.Count; i++)
+						{
 							var ev = elem.Outputs[i];
 							GameObject receiver = ev.receiver as GameObject;
-							if (null != receiver) {
+							if (null != receiver)
+							{
 								bool isReceiverSelected = CheckSelection(receiver.gameObject);
 
-								if (isReceiverSelected || ev.lastTimeExecuted + EdgeTriggersTracker.TimeToLive >= EditorApplication.timeSinceStartup) {
+								if (isReceiverSelected || ev.lastTimeExecuted + EdgeTriggersTracker.TimeToLive >= EditorApplication.timeSinceStartup)
+								{
 									if (behindScreen) senderPos2D = WorldToGUIPoint(entity.transform.position, receiver.transform.position, out behindScreen);
 									var localStart2D = senderPos2D + new Vector2(0, separation * i);
-									
+
 									Bezier b;
 									beziersToDraw.TryGetValue(ev, out b);
 									b.startTangent = Bezier.Tangent.Auto;
@@ -334,12 +365,14 @@ namespace EventVisualizer.Base
 				}
 			}
 
-			foreach (var elem in beziersToDraw) {
+			foreach (var elem in beziersToDraw)
+			{
 				DrawConnection(elem.Key, elem.Value);
 			}
 			beziersToDraw.Clear();
 
-			foreach (var box in boxesToDraw) {
+			foreach (var box in boxesToDraw)
+			{
 				DrawEventBox(box);
 			}
 			boxesToDraw.Clear();
@@ -347,14 +380,17 @@ namespace EventVisualizer.Base
 			Handles.EndGUI();
 		}
 
-		private bool CheckSelection(GameObject go) {
+		private bool CheckSelection(GameObject go)
+		{
 			return !showOnlyWhenSelected.Get() || Selection.Contains(go);
 		}
 
-		private Rect DrawEventBox(StringBuilder sb, string type, List<EventBox> boxesToDraw, EventCall ev, ref Vector2 boxPos, bool outsideScreen) {
+		private Rect DrawEventBox(StringBuilder sb, string type, List<EventBox> boxesToDraw, EventCall ev, ref Vector2 boxPos, bool outsideScreen)
+		{
 			Rect rect = new Rect(boxPos, new Vector2(0, separation));
 
-			if (!outsideScreen && showLabels.Get()) {
+			if (!outsideScreen && showLabels.Get())
+			{
 				sb.Append(type);
 				if (showTimesExecuted.Get()) sb.Append("(").Append(ev.timesExecuted).Append(") ");
 				sb.Append(eventFullName.Get() ? ev.eventFullName : ev.eventShortName).Append("  ▶  ");
@@ -365,7 +401,8 @@ namespace EventVisualizer.Base
 
 				rect.size = GUI.skin.box.CalcSize(content);
 
-				boxesToDraw.Add(new EventBox() {
+				boxesToDraw.Add(new EventBox()
+				{
 					content = content,
 					ev = ev,
 					rect = rect
@@ -377,14 +414,16 @@ namespace EventVisualizer.Base
 		}
 
 
-		private static void DrawEventBox(EventBox box) {
+		private static void DrawEventBox(EventBox box)
+		{
 			var originalContentColor = GUI.contentColor;
 			var originalBackgroundColor = GUI.backgroundColor;
 
 			GUI.backgroundColor = box.ev.color;
 			GUI.contentColor = Brightness(box.ev.color) < 0.5f ? Color.white : Color.black;
-			
-			if (GUI.Button(box.rect, box.content)) {
+
+			if (GUI.Button(box.rect, box.content))
+			{
 				Selection.activeObject = box.ev.sender;
 			}
 
@@ -392,11 +431,13 @@ namespace EventVisualizer.Base
 			GUI.backgroundColor = originalBackgroundColor;
 		}
 
-		private static float Brightness(Color color) {
+		private static float Brightness(Color color)
+		{
 			return 0.2126f * color.r + 0.7152f * color.g + 0.0722f * color.b;
 		}
-		
-		private static void DrawConnection(EventCall ev, Bezier b) {
+
+		private static void DrawConnection(EventCall ev, Bezier b)
+		{
 			const float tangentSize = 50;
 
 			float diff = b.end.x - b.start.x;
@@ -418,12 +459,13 @@ namespace EventVisualizer.Base
 			else if (b.endTangent == Bezier.Tangent.Positive) p4 += new Vector2(Math.Abs(diff), 0);
 			else if (b.endTangent == Bezier.Tangent.NegativeUnscaled) p4 -= new Vector2(tangentSize, 0);
 			else if (b.endTangent == Bezier.Tangent.PositiveUnscaled) p4 += new Vector2(tangentSize, 0);
-			
+
 			Color c = ev.color;
 			Color prevColor = Handles.color;
 			Handles.color = c;
-			Handles.DrawBezier(p1, p2, p3, p4, c, (Texture2D) UnityEditor.Graphs.Styles.selectedConnectionTexture.image, EdgeGUI.kEdgeWidth);
-			foreach (var trigger in EdgeTriggersTracker.GetTimings(ev)) {
+			Handles.DrawBezier(p1, p2, p3, p4, c, (Texture2D)UnityEditor.Graphs.Styles.selectedConnectionTexture.image, EdgeGUI.kEdgeWidth);
+			foreach (var trigger in EdgeTriggersTracker.GetTimings(ev))
+			{
 				Vector3 pos = EdgeGUI.CalculateBezierPoint(trigger, p1, p3, p4, p2);
 				Handles.DrawSolidArc(pos, Vector3.back, pos + Vector3.up, 360, EdgeGUI.kEdgeWidth);
 			}
@@ -431,20 +473,22 @@ namespace EventVisualizer.Base
 		}
 
 		/// <param name="p2">if p is behind the screen, p2 is used to trace a line to p and raycast it to the near clipping camera of the scene camera</param>
-		private static Vector2 WorldToGUIPoint(Vector3 p, Vector3 p2, out bool behindScreen) {
+		private static Vector2 WorldToGUIPoint(Vector3 p, Vector3 p2, out bool behindScreen)
+		{
 			Camera cam = SceneView.currentDrawingSceneView.camera;
 			Vector3 viewPos = cam.WorldToViewportPoint(p);
 			behindScreen = viewPos.z < 0;
 
 			if (behindScreen && cam.WorldToViewportPoint(p2).z < 0) return Vector2.zero;
 
-			if (behindScreen) {
+			if (behindScreen)
+			{
 				if (p2 == cam.transform.position) return Vector2.zero;
-				
+
 				var Plane = new Plane(cam.transform.forward, cam.transform.position + cam.transform.forward * cam.nearClipPlane);
 				Ray r = new Ray(p, p2 - p);
 				float enter;
-				
+
 				if (!Plane.Raycast(r, out enter)) return Vector2.zero;
 
 				Vector3 proj = r.origin + r.direction * enter;
@@ -453,7 +497,7 @@ namespace EventVisualizer.Base
 			}
 			float scaleFactor = 1f;
 			return new Vector2(
-				viewPos.x *  cam.scaledPixelWidth,
+				viewPos.x * cam.scaledPixelWidth,
 				(1 - viewPos.y) * cam.scaledPixelHeight) * scaleFactor;
 		}
 	}

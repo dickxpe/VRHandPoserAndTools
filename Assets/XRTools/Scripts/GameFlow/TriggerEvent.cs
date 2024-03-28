@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UltEvents;
 
-public class TriggerEvent : MonoBehaviour
+public class TriggerEvent : MonoBehaviour, ICallbackEvent
 {
     [SerializeField]
     UltEvent onTriggerEnter;
@@ -15,18 +15,67 @@ public class TriggerEvent : MonoBehaviour
     [SerializeField]
     UltEvent onTriggerExit;
 
+    [SerializeField]
+    UltEvent callbackEvent;
+
+    [SerializeField]
+    IncludeExcludeColliders includeOrExcludeColliders = IncludeExcludeColliders.Exclude;
+
+    [SerializeField]
+    List<Collider> colliders = new List<Collider>();
+
+
+    public enum IncludeExcludeColliders
+    {
+        Include,
+        Exclude
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        onTriggerEnter.Invoke();
+        CheckCollider(other, onTriggerEnter);
     }
 
     void OnTriggerStay(Collider other)
     {
-        onTriggerStay.Invoke();
+        CheckCollider(other, onTriggerStay);
     }
 
     void OnTriggerExit(Collider other)
     {
-        onTriggerExit.Invoke();
+        CheckCollider(other, onTriggerExit);
+    }
+
+    public void CheckCollider(Collider collider, UltEvent callEvent)
+    {
+        if (includeOrExcludeColliders == IncludeExcludeColliders.Include)
+        {
+            if (colliders.Count > 0)
+            {
+                if (colliders.Contains(collider))
+                {
+                    callEvent.Invoke();
+                }
+            }
+        }
+        else if (includeOrExcludeColliders == IncludeExcludeColliders.Exclude)
+        {
+            if (colliders.Count > 0)
+            {
+                if (!colliders.Contains(collider))
+                {
+                    callEvent.Invoke();
+                }
+            }
+            else
+            {
+                callEvent.Invoke();
+            }
+        }
+    }
+
+    public void CallBack()
+    {
+        callbackEvent.Invoke();
     }
 }

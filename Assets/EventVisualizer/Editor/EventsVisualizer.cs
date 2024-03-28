@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using System;
 using UnityEditor.Callbacks;
 using System.Linq;
+using UltEvents;
 
 namespace EventVisualizer.Base
 {
@@ -71,12 +72,45 @@ namespace EventVisualizer.Base
 
 			do
 			{
-				SerializedProperty persistentCalls = iterator.FindPropertyRelative("m_PersistentCalls.m_Calls");
+				SerializedProperty persistentCalls;
+				bool isUltEvent = false;
+				if (iterator.type.Equals("UltEvent"))
+				{
+					if ((int)iterator.FindPropertyRelative("_PersistentCalls.Array.size").boxedValue > 0)
+					{
+						persistentCalls = iterator.FindPropertyRelative("_PersistentCalls.Array");
+						isUltEvent = true;
+					}
+					else
+					{
+						persistentCalls = null;
+					}
+				}
+				else
+				{
+					persistentCalls = iterator.FindPropertyRelative("m_PersistentCalls.m_Calls");
+					isUltEvent = false;
+				}
+
 				bool isUnityEvent = persistentCalls != null;
 				if (isUnityEvent && persistentCalls.arraySize > 0)
 				{
-					UnityEventBase unityEvent = Puppy.EditorHelper.GetTargetObjectOfProperty(iterator) as UnityEventBase;
-					AddEventCalls(calls, caller, unityEvent, iterator.displayName, iterator.propertyPath);
+					if (isUltEvent)
+					{
+						UltEvent ultEvent = Puppy.EditorHelper.GetTargetObjectOfProperty(iterator) as UltEvent;
+						if (ultEvent != null)
+						{
+							AddEventCalls(calls, caller, ultEvent, iterator.displayName, iterator.propertyPath);
+						}
+					}
+					else
+					{
+						UnityEventBase unityEvent = Puppy.EditorHelper.GetTargetObjectOfProperty(iterator) as UnityEventBase;
+						if (unityEvent != null)
+						{
+							AddEventCalls(calls, caller, unityEvent, iterator.displayName, iterator.propertyPath);
+						}
+					}
 				}
 				hasData = iterator.Next(!isUnityEvent);
 				if (hasData)
@@ -116,10 +150,27 @@ namespace EventVisualizer.Base
 			}
 		}
 
+		private static void AddEventCalls(HashSet<EventCall> calls, Component caller, UltEvent unityEvent, string eventShortName, string eventFullName)
+		{
+			for (int i = 0; i < unityEvent.PersistentCallsList.Count(); i++)
+			{
+				string methodName = unityEvent.PersistentCallsList[i].MemberName;
+				UnityEngine.Object receiver = unityEvent.PersistentCallsList[i].Target;
+
+				if (receiver != null && methodName != null && methodName != "")
+				{
+					EventCall call = new EventCall(caller, receiver, eventShortName, eventFullName, methodName, unityEvent);
+					calls.Add(call);
+					calls.Contains(call);
+				}
+			}
+		}
+
 		public static bool NeedsGraphRefresh = false;
 
 		private static HashSet<Type> ComponentsThatCanHaveUnityEvent = new HashSet<Type>();
-		private static Dictionary<Type, bool> TmpSearchedTypes = new Dictionary<Type, bool>();
+		private static Dictionary<Type, bool> TmpSearchedTypesUnityEvents = new Dictionary<Type, bool>();
+		private static Dictionary<Type, bool> TmpSearchedTypesUltEvents = new Dictionary<Type, bool>();
 
 		[DidReloadScripts, InitializeOnLoadMethod]
 		static void RefreshTypesThatCanHoldUnityEvents()
@@ -138,12 +189,22 @@ namespace EventVisualizer.Base
 
 			foreach (var obj in objects)
 			{
-				if (RecursivelySearchFields<UnityEventBase>(obj))
+				if (obj.Name.Contains("Sequence"))
+				{
+					Debug.Log(obj.Name);
+				}
+				if (RecursivelySearchFieldsForUnityEvents<UnityEventBase>(obj))
+				{
+					ComponentsThatCanHaveUnityEvent.Add(obj);
+				}
+
+				if (RecursivelySearchFieldsForUltEvents<UltEventBase>(obj))
 				{
 					ComponentsThatCanHaveUnityEvent.Add(obj);
 				}
 			}
-			TmpSearchedTypes.Clear();
+			TmpSearchedTypesUnityEvents.Clear();
+			TmpSearchedTypesUltEvents.Clear();
 
 			//			Debug.Log("UnityEventVisualizer Updated Components that can have UnityEvents (" + ComponentsThatCanHaveUnityEvent.Count + "). Milliseconds: " + sw.Elapsed.TotalMilliseconds);
 		}
@@ -154,41 +215,88 @@ namespace EventVisualizer.Base
 		/// <typeparam name="T">Needle</typeparam>
 		/// <param name="type">Haystack</param>
 		/// <returns>Can contain some object <typeparamref name="T"/></returns>
-		static bool RecursivelySearchFields<T>(Type type)
+		static bool RecursivelySearchFieldsForUnityEvents<T>(Type type)
 		{
+
+
+
 			bool wanted;
-			if (TmpSearchedTypes.TryGetValue(type, out wanted)) return wanted;
-			TmpSearchedTypes.Add(type, false);
+			if (TmpSearchedTypesUnityEvents.TryGetValue(type, out wanted)) return wanted;
+			TmpSearchedTypesUnityEvents.Add(type, false);
 
 			const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 			foreach (var fType in type.GetFields(flags).Where(f => !f.FieldType.IsPrimitive).Select(f => f.FieldType).Concat(type.GetProperties(flags).Select(p => p.PropertyType)))
 			{
 				if (typeof(T).IsAssignableFrom(fType))
 				{
-					return TmpSearchedTypes[type] |= true;
+					return TmpSearchedTypesUnityEvents[type] |= true;
 				}
 				else if (typeof(UnityEngine.Object).IsAssignableFrom(fType))
 				{
 					continue;
 				}
-				else if (!TmpSearchedTypes.TryGetValue(fType, out wanted))
+				else if (!TmpSearchedTypesUnityEvents.TryGetValue(fType, out wanted))
 				{
-					if (RecursivelySearchFields<T>(fType))
+					if (RecursivelySearchFieldsForUnityEvents<T>(fType))
 					{
-						return TmpSearchedTypes[type] |= true;
+						return TmpSearchedTypesUnityEvents[type] |= true;
 					}
 				}
 				else if (wanted)
 				{
-					return TmpSearchedTypes[type] |= true;
+					return TmpSearchedTypesUnityEvents[type] |= true;
 				}
 			}
 
 			if (type.IsArray)
 			{
-				if (RecursivelySearchFields<T>(type.GetElementType()))
+				if (RecursivelySearchFieldsForUnityEvents<T>(type.GetElementType()))
 				{
-					return TmpSearchedTypes[type] |= true;
+					return TmpSearchedTypesUnityEvents[type] |= true;
+				}
+			}
+
+			return false;
+		}
+
+		static bool RecursivelySearchFieldsForUltEvents<T>(Type type)
+		{
+
+
+
+			bool wanted;
+			if (TmpSearchedTypesUltEvents.TryGetValue(type, out wanted)) return wanted;
+			TmpSearchedTypesUltEvents.Add(type, false);
+
+			const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+			foreach (var fType in type.GetFields(flags).Where(f => !f.FieldType.IsPrimitive).Select(f => f.FieldType).Concat(type.GetProperties(flags).Select(p => p.PropertyType)))
+			{
+				if (typeof(T).IsAssignableFrom(fType))
+				{
+					return TmpSearchedTypesUltEvents[type] |= true;
+				}
+				else if (typeof(UnityEngine.Object).IsAssignableFrom(fType))
+				{
+					continue;
+				}
+				else if (!TmpSearchedTypesUltEvents.TryGetValue(fType, out wanted))
+				{
+					if (RecursivelySearchFieldsForUltEvents<T>(fType))
+					{
+						return TmpSearchedTypesUltEvents[type] |= true;
+					}
+				}
+				else if (wanted)
+				{
+					return TmpSearchedTypesUltEvents[type] |= true;
+				}
+			}
+
+			if (type.IsArray)
+			{
+				if (RecursivelySearchFieldsForUltEvents<T>(type.GetElementType()))
+				{
+					return TmpSearchedTypesUltEvents[type] |= true;
 				}
 			}
 

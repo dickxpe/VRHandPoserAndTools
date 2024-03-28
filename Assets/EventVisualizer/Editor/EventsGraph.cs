@@ -34,7 +34,7 @@ namespace EventVisualizer.Base
 			this.selectedRoots = roots;
 			this.searchingHierarchy = searchHierarchy;
 			BuildGraph(selectedRoots, searchHierarchy);
-			SortGraph(nodes,false);
+			SortGraph(nodes, false);
 		}
 
 		public void RefreshGraphConnections()
@@ -49,7 +49,7 @@ namespace EventVisualizer.Base
 
 			foreach (NodeGUI node in nodes)
 			{
-				if(positions.ContainsKey(node.name))
+				if (positions.ContainsKey(node.name))
 				{
 					node.position = positions[node.name];
 				}
@@ -58,7 +58,7 @@ namespace EventVisualizer.Base
 					adriftNodes.Add(node);
 				}
 			}
-			SortGraph(adriftNodes,true);
+			SortGraph(adriftNodes, true);
 		}
 
 		private void BuildGraph(GameObject[] roots, bool searchHierarchy)
@@ -66,15 +66,15 @@ namespace EventVisualizer.Base
 			NodeData.ClearAll();
 			Clear(true);
 			List<EventCall> calls = EventsFinder.FindAllEvents(roots, searchHierarchy);
-			if(calls.Count > WARNING_CALLS_THRESOLD)
+			if (calls.Count > WARNING_CALLS_THRESOLD)
 			{
 				bool goAhead = EditorUtility.DisplayDialog("Confirm massive graph",
-					"You are about to generate a graph with "+ calls.Count+" events.\n"
+					"You are about to generate a graph with " + calls.Count + " events.\n"
 					+ "Tip: You can select some gameobjects and search events in just those or their children instead.",
 					"Go ahead",
 					"Abort");
 
-				if(goAhead)
+				if (goAhead)
 				{
 					GenerateGraphFromCalls(calls);
 				}
@@ -147,9 +147,18 @@ namespace EventVisualizer.Base
 					if (!positionedNodes.Contains(node))
 					{
 						positionedNodes.Add(node);
-						height += PositionNodeHierarchy(node, masterPosition
+						if (node.inputFlowSlots.Count() > 1)
+						{
+							height += PositionNodeHierarchy(node, masterPosition
+								+ Vector2.right * HORIZONTAL_SPACING * 2
+								+ Vector2.up * height, skipParents);
+						}
+						else
+						{
+							height += PositionNodeHierarchy(node, masterPosition
 							+ Vector2.right * HORIZONTAL_SPACING
 							+ Vector2.up * height, skipParents);
+						}
 					}
 				}
 			}
