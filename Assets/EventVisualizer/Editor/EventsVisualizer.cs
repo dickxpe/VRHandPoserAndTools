@@ -15,6 +15,7 @@ namespace EventVisualizer.Base
 	{
 		public static List<EventCall> FindAllEvents(GameObject[] roots, bool searchHierarchy = true)
 		{
+			RefreshTypesThatCanHoldUnityEvents();
 			HashSet<EventCall> calls = new HashSet<EventCall>();
 			foreach (var type in ComponentsThatCanHaveUnityEvent)
 			{
