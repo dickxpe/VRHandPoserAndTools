@@ -34,7 +34,7 @@ namespace UltEvents
         /************************************************************************************************************************/
         #region Fields and Properties
         /************************************************************************************************************************/
-
+        [SerializeField]
         /// <summary>The number of parameters this event takes.</summary>
         public abstract int ParameterCount { get; }
 
@@ -46,14 +46,16 @@ namespace UltEvents
         /// <summary>
         /// The serialized method and parameter details of this event.
         /// </summary>
+        [SerializeField]
         public List<PersistentCall> PersistentCallsList
-            => _PersistentCalls;
+           => _PersistentCalls;
 
         /************************************************************************************************************************/
 
         /// <summary>
         /// The non-serialized method and parameter details of this event.
         /// </summary>
+        [SerializeField]
         protected abstract Delegate DynamicCallsBase { get; set; }
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace UltEvents
             return _DynamicCallInvocationList;
         }
 
-        internal int GetDynamicCallInvocationListCount()
+        public int GetDynamicCallInvocationListCount()
             => DynamicCallsBase == null
             ? 0
             : GetDynamicCallInvocationList().Length;
@@ -427,6 +429,16 @@ namespace UltEvents
 #endif
             var enumerator = invocationList != null ? invocationList.GetEnumerator() : null;
             UltEventUtils.AppendDeepToString(text, enumerator, "\n    ");
+        }
+
+        public void OnBeforeSerialize()
+        {
+
+        }
+
+        public void OnAfterDeserialize()
+        {
+
         }
 
         /************************************************************************************************************************/
