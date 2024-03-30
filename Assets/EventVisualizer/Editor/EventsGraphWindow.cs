@@ -204,12 +204,12 @@ namespace EventVisualizer.Base
 
 		void AddCallbacks()
 		{
-			SceneView.onSceneGUIDelegate += OnSceneGUI;
+			SceneView.duringSceneGui += OnSceneGUI;
 			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
 		}
 		void RemoveCallbacks()
 		{
-			SceneView.onSceneGUIDelegate -= OnSceneGUI;
+			SceneView.duringSceneGui -= OnSceneGUI;
 			EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 		}
 

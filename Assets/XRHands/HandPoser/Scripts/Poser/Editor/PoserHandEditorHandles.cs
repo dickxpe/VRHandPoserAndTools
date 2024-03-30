@@ -28,33 +28,34 @@ namespace InteractionsToolkit.Poser
 
             if (poserHand.gameObject.tag != "Gamehand")
             {
-                GUI.color = isEditing ? Color.red : Color.green;
-                editButtonText = isEditing ? "Finish Posing Joints" : "Start Posing Joints";
+                GUI.color = poserHand.isEditing ? Color.red : Color.green;
+                editButtonText = poserHand.isEditing ? "Finish Posing Joints" : "Start Posing Joints";
 
                 if (GUILayout.Button(editButtonText, EditorStyles.miniButton))
                 {
-                    if (isEditing)
-                    {
-                        var handPose = poserHand.transform.GetComponentInParent<HandPose>();
-                        // handPose.PrimaryPose = null;
-                        if (handPose) Selection.SetActiveObjectWithContext(handPose, null);
-                    }
-                    else
+                    if (!poserHand.isEditing)
                     {
                         isFirstHandle = true;
                         Tools.current = Tool.Rotate;
-                        SceneView.RepaintAll();
+                        ActiveEditorTracker.sharedTracker.isLocked = true;
                     }
+                    else
+                    {
+                        Selection.SetActiveObjectWithContext(poserHand, null);
+                        ActiveEditorTracker.sharedTracker.isLocked = false;
+                    }
+                    SceneView.RepaintAll();
+                    EditorWindow.GetWindow(typeof(HandPoser)).Repaint();
 
-                    ActiveEditorTracker.sharedTracker.isLocked = !ActiveEditorTracker.sharedTracker.isLocked;
-                    isEditing = !isEditing;
+
+                    poserHand.isEditing = !poserHand.isEditing;
                 }
             }
         }
 
         private void OnSceneGUI()
         {
-            if (!isEditing) return;
+            if (!poserHand.isEditing) return;
 
             HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
 

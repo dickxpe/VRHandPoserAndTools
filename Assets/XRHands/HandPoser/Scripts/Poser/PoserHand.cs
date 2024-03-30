@@ -9,6 +9,12 @@ namespace InteractionsToolkit.Poser
 {
     public class PoserHand : MonoBehaviour
     {
+
+#if UNITY_EDITOR
+        public bool isEditing;
+#endif
+
+
         [Header("Hand Properties")]
 
         public Handedness Type;
@@ -133,12 +139,12 @@ namespace InteractionsToolkit.Poser
             }
         }
 
-        public void SetPose(PoseData poseData, float duration = 0.2f)
+        public void SetPose(PoseData poseData, float duration = 0.2f, Action callback = null)
         {
-            SetPose(Type == Handedness.Left ? poseData.LeftJoints : poseData.RightJoints, duration);
+            SetPose(Type == Handedness.Left ? poseData.LeftJoints : poseData.RightJoints, duration, callback);
         }
 
-        public void SetPose(HandPoseJoints pose, float duration = 0.2f)
+        public void SetPose(HandPoseJoints pose, float duration = 0.2f, Action callback = null)
         {
 
             if (pose == null || pose.GetTotalJointCount() == 0) return;
@@ -153,7 +159,7 @@ namespace InteractionsToolkit.Poser
                 for (var j = 0; j < handJoints.jointGroups[i].joints.Count; j++)
                     if (Application.isPlaying)
                     {
-                        PoseCoroutines.Add(StartCoroutine(RotationRoutine(handJoints.jointGroups[i].joints[j].transform, pose.poseJointGroups[i].poseJoints[j].LocalRotation, duration)));
+                        PoseCoroutines.Add(StartCoroutine(RotationRoutine(handJoints.jointGroups[i].joints[j].transform, pose.poseJointGroups[i].poseJoints[j].LocalRotation, duration, 1, callback)));
                     }
                     else
                     {
@@ -164,7 +170,7 @@ namespace InteractionsToolkit.Poser
 
         private static Quaternion GetScrubRotation(Quaternion from, Quaternion end, float value) => Quaternion.Lerp(from, end, value);
 
-        private static IEnumerator RotationRoutine(Transform target, Quaternion end, float duration, float inputValue = 1)
+        private static IEnumerator RotationRoutine(Transform target, Quaternion end, float duration, float inputValue = 1, Action callback = null)
         {
             var time = 0f;
             var start = target.localRotation;
@@ -179,6 +185,11 @@ namespace InteractionsToolkit.Poser
             }
 
             target.localRotation = percentage;
+
+            if (callback != null)
+            {
+                callback.Invoke();
+            }
 
         }
     }

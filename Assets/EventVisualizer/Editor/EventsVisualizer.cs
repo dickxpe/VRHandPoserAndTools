@@ -190,10 +190,6 @@ namespace EventVisualizer.Base
 
 			foreach (var obj in objects)
 			{
-				if (obj.Name.Contains("Sequence"))
-				{
-					Debug.Log(obj.Name);
-				}
 				if (RecursivelySearchFieldsForUnityEvents<UnityEventBase>(obj))
 				{
 					ComponentsThatCanHaveUnityEvent.Add(obj);

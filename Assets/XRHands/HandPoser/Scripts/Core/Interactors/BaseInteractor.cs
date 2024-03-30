@@ -105,7 +105,7 @@ namespace InteractionsToolkit.Core
         public void NotifySelectExit(BaseInteractable interactable)
         {
             // print($"{name} notified of selection exit");
-            Debug.Log(interactable.gameObject.name);
+            //Debug.Log(interactable.gameObject.name);
             if (interactable.ObjectToHand)
             {
                 Rigidbody iRigidBody = interactable.GetComponent<Rigidbody>();

@@ -26,14 +26,22 @@ namespace InteractionsToolkit.Core
 
             if (other.TryGetComponent(out BaseInteractable interactable))
             {
-                HandleHoverEnter(interactable);
+
+                if (interactable.colliders != null & interactable.colliders.Contains(other) || interactable.colliders == null)
+                {
+                    HandleHoverEnter(interactable);
+                }
             }
             else
             {
                 BaseInteractable baseInteractable = other.gameObject.GetComponentInParent<BaseInteractable>();
                 if (baseInteractable)
                 {
-                    HandleHoverEnter(baseInteractable);
+                    if (baseInteractable.colliders != null & baseInteractable.colliders.Contains(other) || baseInteractable.colliders == null)
+                    {
+
+                        HandleHoverEnter(baseInteractable);
+                    }
                 }
             }
         }
@@ -42,14 +50,21 @@ namespace InteractionsToolkit.Core
         {
             if (other.TryGetComponent(out BaseInteractable interactable))
             {
-                HandleHoverEnter(interactable);
+                if (interactable.colliders != null & interactable.colliders.Contains(other) || interactable.colliders == null)
+                {
+                    HandleHoverEnter(interactable);
+                }
             }
             else
             {
                 BaseInteractable baseInteractable = other.gameObject.GetComponentInParent<BaseInteractable>();
                 if (baseInteractable)
                 {
-                    HandleHoverEnter(baseInteractable);
+
+                    if (baseInteractable.colliders != null & baseInteractable.colliders.Contains(other) || baseInteractable.colliders == null)
+                    {
+                        HandleHoverEnter(baseInteractable);
+                    }
                 }
             }
         }
@@ -58,14 +73,20 @@ namespace InteractionsToolkit.Core
         {
             if (other.TryGetComponent(out BaseInteractable interactable))
             {
-                HandleHoverExit(interactable);
+                if (interactable.colliders != null & interactable.colliders.Contains(other) || interactable.colliders == null)
+                {
+                    HandleHoverExit(interactable);
+                }
             }
             else
             {
                 BaseInteractable baseInteractable = other.gameObject.GetComponentInParent<BaseInteractable>();
                 if (baseInteractable)
                 {
-                    HandleHoverExit(baseInteractable);
+                    if (baseInteractable.colliders != null & baseInteractable.colliders.Contains(other) || baseInteractable.colliders == null)
+                    {
+                        HandleHoverExit(baseInteractable);
+                    }
                 }
             }
         }

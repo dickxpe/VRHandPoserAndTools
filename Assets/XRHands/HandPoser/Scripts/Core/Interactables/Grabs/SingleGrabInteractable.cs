@@ -14,10 +14,17 @@ namespace InteractionsToolkit.Core
         [Header("Animation Settings")]
         [SerializeField] protected float AttachDuration = 0.2f;
 
+        [SerializeField] bool enableDefaultAnimations = false;
+
         private PoserHand activeHand;
 
         public PoseData PrimaryPose { get => pose; set => pose = value; }
         public PoseData SecondaryPose { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+        public PoserHand GetActiveHand()
+        {
+            return activeHand;
+        }
 
         public override void HandleSelectEnter(BaseInteractor interactor)
         {
@@ -27,7 +34,7 @@ namespace InteractionsToolkit.Core
                 if (activeHand == null)
                 {
                     activeHand = newHand;
-                    activeHand.SetIsPosing(true);
+                    activeHand.SetIsPosing(!enableDefaultAnimations);
                     SetPose(activeHand, pose, AttachDuration);
 
                 }

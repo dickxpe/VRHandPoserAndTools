@@ -22,10 +22,10 @@ namespace InteractionsToolkit.Poser
         public GameObject leftHandParent;
         public GameObject rightHandParent;
 
-        private PoserHand leftHand;
-        private PoserHand rightHand;
+        public PoserHand leftHand;
+        public PoserHand rightHand;
 
-        private GameObject poseGameObject;
+        public GameObject poseGameObject;
 
         public float GetHandDistance()
         {
@@ -181,14 +181,22 @@ namespace InteractionsToolkit.Poser
                 parentGO.transform.localPosition = Vector3.zero;
                 parentGO.transform.localRotation = Quaternion.identity;
                 parentGO.transform.SetParent(poseGameObject.transform);
-                parentGO.name += "---Rotate & Position Me---";
+                parentGO.name += " ---Rotate & Position Me---";
 
                 poserHand = Instantiate(prefab, parentGO.transform);
                 var poserHandTransform = poserHand.transform;
                 poserHandTransform.localPosition = Vector3.zero;
                 poserHandTransform.localRotation = Quaternion.identity;
                 poserHand.gameObject.SetActive(true);
-                poserHand.name = "---DO NOT Rotate or Position Me // Rotate joints only---";
+                if (poserHand.Type == Handedness.Left)
+                {
+                    poserHand.name = "Left Hand ---DO NOT Rotate or Position Me // Rotate joints only---";
+                }
+                else
+                {
+                    poserHand.name = "Right Hand ---DO NOT Rotate or Position Me // Rotate joints only---";
+                }
+
 
                 parentGO.AddComponent<PoserHandParent>();
 

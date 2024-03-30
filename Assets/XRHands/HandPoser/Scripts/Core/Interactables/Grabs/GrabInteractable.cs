@@ -12,53 +12,56 @@ namespace InteractionsToolkit.Core
         {
             HandPoseJoints pose;
             PoseTransform parentTransform;
-            if (poserHand.Type == Handedness.Left)
+            if (poseData != null)
             {
-                pose = poseData.LeftJoints;
-                parentTransform = poseData.LeftParentTransform;
-            }
-            else
-            {
-                pose = poseData.RightJoints;
-                parentTransform = poseData.RightParentTransform;
-            }
-
-
-            if (ObjectToHand)
-            {
-                poserHand.SetPose(pose, poseDuration);
-                ApplyAttachmentTransform(parentTransform, poserHand.AttachTransform);
-                transform.SetParent(poserHand.AttachTransform);
-
-                StopAllCoroutines();
-                StartCoroutine(AttachHandRoutine(transform, Vector3.zero, Quaternion.identity, poseDuration));
-            }
-            else
-            {
-
-                SkinnedMeshRenderer skinnedRenderer = poserHand.GetComponentInChildren<SkinnedMeshRenderer>();
-                skinnedRenderer.enabled = false;
-                MeshRenderer[] renderers = poserHand.GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer renderer in renderers)
+                if (poserHand.Type == Handedness.Left)
                 {
-                    renderer.enabled = false;
-                }
-                poserHand.ghostHand.gameObject.SetActive(true);
-                poserHand.ghostHand.transform.SetParent(null);
-                poserHand.ghostHand.SetPose(pose, poseDuration);
-                if (attachTransform)
-                {
-                    poserHand.ghostHand.GetComponent<GhostHand>().followObject = attachTransform;
+                    pose = poseData.LeftJoints;
+                    parentTransform = poseData.LeftParentTransform;
                 }
                 else
                 {
-                    poserHand.ghostHand.GetComponent<GhostHand>().followObject = transform;
-                }
-                // poserHand.ghostHand.transform.SetParent(transform, true);
-                ApplyHandTransform(poserHand.ghostHand.transform, poserHand.AttachTransform);
-                // StopAllCoroutines();
-                // StartCoroutine(AttachHandRoutine(poserHand.ghostHand.transform, Vector3.zero, Quaternion.identity, poseDuration));
 
+                    pose = poseData.RightJoints;
+                    parentTransform = poseData.RightParentTransform;
+                }
+
+                if (ObjectToHand)
+                {
+                    poserHand.SetPose(pose, poseDuration);
+                    ApplyAttachmentTransform(parentTransform, poserHand.AttachTransform);
+                    transform.SetParent(poserHand.AttachTransform);
+
+                    StopAllCoroutines();
+                    StartCoroutine(AttachHandRoutine(transform, Vector3.zero, Quaternion.identity, poseDuration));
+                }
+                else
+                {
+
+                    SkinnedMeshRenderer skinnedRenderer = poserHand.GetComponentInChildren<SkinnedMeshRenderer>();
+                    skinnedRenderer.enabled = false;
+                    MeshRenderer[] renderers = poserHand.GetComponentsInChildren<MeshRenderer>();
+                    foreach (MeshRenderer renderer in renderers)
+                    {
+                        renderer.enabled = false;
+                    }
+                    poserHand.ghostHand.gameObject.SetActive(true);
+                    poserHand.ghostHand.transform.SetParent(null);
+                    poserHand.ghostHand.SetPose(pose, poseDuration);
+                    if (attachTransform)
+                    {
+                        poserHand.ghostHand.GetComponent<GhostHand>().followObject = attachTransform;
+                    }
+                    else
+                    {
+                        poserHand.ghostHand.GetComponent<GhostHand>().followObject = transform;
+                    }
+                    // poserHand.ghostHand.transform.SetParent(transform, true);
+                    ApplyHandTransform(poserHand.ghostHand.transform, poserHand.AttachTransform);
+                    // StopAllCoroutines();
+                    // StartCoroutine(AttachHandRoutine(poserHand.ghostHand.transform, Vector3.zero, Quaternion.identity, poseDuration));
+
+                }
             }
         }
 
