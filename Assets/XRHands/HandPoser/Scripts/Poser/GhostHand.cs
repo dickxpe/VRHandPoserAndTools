@@ -1,5 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
+
 using UnityEngine;
 namespace InteractionsToolkit.Poser
 {

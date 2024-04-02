@@ -1,35 +1,28 @@
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
+
 using System;
 using UltEvents;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class XRLever : MonoBehaviour
 {
     [SerializeField]
     UltEvent OnEvent;
-
     [SerializeField]
     UltEvent OffEvent;
-
     [Serializable]
     public class FloatEvent : UltEvent<float> { }
-
     [SerializeField]
     FloatEvent valueChangedEvent;
-
     [SerializeField]
     float treshold = 10;
-
     [SerializeField]
     public bool isToggle = true;
-
     HingeJoint hinge;
-
     public float value;
-
     float max;
     float min;
-
     bool isOn = false;
     bool isOff = false;
 
@@ -39,13 +32,11 @@ public class XRLever : MonoBehaviour
         hinge = GetComponentInChildren<HingeJoint>();
         max = hinge.limits.max;
         min = hinge.limits.min;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (isToggle)
         {
             if (hinge.angle > max - treshold)
@@ -54,11 +45,6 @@ public class XRLever : MonoBehaviour
                 {
                     isOn = true;
                     OnEvent.Invoke();
-                }
-
-                if (hinge.angle >= max)
-                {
-
                 }
             }
             else
@@ -73,11 +59,6 @@ public class XRLever : MonoBehaviour
                     isOff = true;
                     OffEvent.Invoke();
                 }
-
-                if (hinge.angle <= min)
-                {
-
-                }
             }
             else
             {
@@ -86,9 +67,6 @@ public class XRLever : MonoBehaviour
         }
 
         value = (Mathf.Abs(min) + hinge.angle) / (max - min);
-
         valueChangedEvent.Invoke(value);
-
-
     }
 }

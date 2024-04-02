@@ -1,4 +1,7 @@
-﻿using InteractionsToolkit.Poser;
+﻿// Author: Cody Tedrick https://github.com/ctedrick
+// MIT License - Copyright (c) 2024 Cody Tedrick
+
+using InteractionsToolkit.Poser;
 using UnityEngine;
 
 namespace HandPoser.HandPoseDemo

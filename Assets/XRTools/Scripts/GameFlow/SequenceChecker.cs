@@ -1,30 +1,20 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
+
 using UnityEngine;
-using UnityEngine.Events;
 using UltEvents;
 
 public class SequenceChecker : MonoBehaviour
 {
-
     [SerializeField]
     int[] sequence;
-
-
     [SerializeField]
     UltEvent checkEvent;
-
-
     [SerializeField]
     UltEvent checkCorrectEvent;
-
-
     [SerializeField]
     UltEvent completedEvent;
-
     bool sequenceCompleted;
-
     int position = 0;
 
     public void CheckSequence(int id, GameObject gameObject)
@@ -45,5 +35,4 @@ public class SequenceChecker : MonoBehaviour
             }
         }
     }
-
 }

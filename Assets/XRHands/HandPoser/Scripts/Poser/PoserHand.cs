@@ -1,10 +1,11 @@
-﻿using System;
+﻿// Author: Cody Tedrick https://github.com/ctedrick
+// Edited by: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Cody Tedrick - Copyright (c) 2024 Peter Dickx
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using InteractionsToolkit.Core;
 using UnityEngine;
-using UnityEngine.XR;
-
 namespace InteractionsToolkit.Poser
 {
     public class PoserHand : MonoBehaviour

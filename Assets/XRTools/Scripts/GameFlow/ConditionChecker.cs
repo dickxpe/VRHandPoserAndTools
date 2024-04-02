@@ -1,16 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
+
 using UltEvents;
 using UnityEngine;
-using UnityEngine.Events;
-
 public class ConditionsChecker : MonoBehaviour
 {
     [SerializeField]
     bool[] conditions;
-
     bool allConditionsCompleted;
-
     [SerializeField]
     UltEvent completedEvent;
 

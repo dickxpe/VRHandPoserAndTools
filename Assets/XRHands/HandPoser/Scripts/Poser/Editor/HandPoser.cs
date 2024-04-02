@@ -1,11 +1,11 @@
+// Author: Cody Tedrick https://github.com/ctedrick
+// Edited by: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Cody Tedrick - Copyright (c) 2024 Peter Dickx
+
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
-using InteractionsToolkit.Core;
-using InteractionsToolkit.Poser;
 using InteractionsToolkit.Utility;
-using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
 using System;
 using System.Reflection;
 using Unity.EditorCoroutines.Editor;
@@ -160,7 +160,7 @@ namespace InteractionsToolkit.Poser
 
         HandPoser()
         {
-            EditorCoroutineUtility.StartCoroutine(IEDelayEditor(this), this);
+            //  EditorCoroutineUtility.StartCoroutine(IEDelayEditor(this), this);
         }
 
         void OnGUI()

@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using InteractionsToolkit.Poser;
-using UnityEngine;
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
 
-public interface IHandPose
+namespace InteractionsToolkit.Poser
 {
-    public PoseData PrimaryPose { get; set; }
-    public PoseData SecondaryPose { get; set; }
+    public interface IHandPose
+    {
+        public PoseData PrimaryPose { get; set; }
+        public PoseData SecondaryPose { get; set; }
 
+    }
 }

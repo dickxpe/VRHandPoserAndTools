@@ -1,4 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿// Author: Cody Tedrick https://github.com/ctedrick
+// Edited by: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Cody Tedrick - Copyright (c) 2024 Peter Dickx
+using JetBrains.Annotations;
 using InteractionsToolkit.Poser;
 using UnityEngine;
 using UnityEngine.InputSystem;

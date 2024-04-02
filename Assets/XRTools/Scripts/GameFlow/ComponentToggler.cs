@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
+
 using UnityEngine;
 
 public class ComponentToggler : MonoBehaviour
 {
     [SerializeField]
     Behaviour component;
-
     bool isOn = false;
     void Awake()
     {
@@ -17,5 +17,4 @@ public class ComponentToggler : MonoBehaviour
         isOn = !isOn;
         component.enabled = isOn;
     }
-
 }

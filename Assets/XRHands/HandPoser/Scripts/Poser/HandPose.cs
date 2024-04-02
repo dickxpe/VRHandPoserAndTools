@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
+
 using InteractionsToolkit.Poser;
 using UnityEngine;
-
-public class HandPose : MonoBehaviour, IHandPose
+namespace InteractionsToolkit.Poser
 {
-    PoseData primaryPose;
-    PoseData secondaryPose;
+    public class HandPose : MonoBehaviour, IHandPose
+    {
+        PoseData primaryPose;
+        PoseData secondaryPose;
 
-    public PoseData PrimaryPose { get => primaryPose; set => primaryPose = value; }
-    public PoseData SecondaryPose { get => secondaryPose; set => SecondaryPose = value; }
+        public PoseData PrimaryPose { get => primaryPose; set => primaryPose = value; }
+        public PoseData SecondaryPose { get => secondaryPose; set => SecondaryPose = value; }
+    }
 }

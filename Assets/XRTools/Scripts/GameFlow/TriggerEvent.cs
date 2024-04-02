@@ -1,29 +1,24 @@
-using System.Collections;
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
+
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UltEvents;
 
 public class TriggerEvent : MonoBehaviour, ICallbackEvent
 {
     [SerializeField]
     UltEvent onTriggerEnter;
-
     [SerializeField]
     UltEvent onTriggerStay;
-
     [SerializeField]
     UltEvent onTriggerExit;
-
     [SerializeField]
     UltEvent callbackEvent;
-
     [SerializeField]
     IncludeExcludeColliders includeOrExcludeColliders = IncludeExcludeColliders.Exclude;
-
     [SerializeField]
     List<Collider> colliders = new List<Collider>();
-
 
     public enum IncludeExcludeColliders
     {

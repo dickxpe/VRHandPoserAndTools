@@ -1,8 +1,9 @@
-using System.Collections;
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
+
 using System.Collections.Generic;
 using UltEvents;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class CollisionEvent : MonoBehaviour, ICallbackEvent
 {
@@ -13,18 +14,12 @@ public class CollisionEvent : MonoBehaviour, ICallbackEvent
     UltEvent onCollisionStay;
     [SerializeField]
     UltEvent onCollisionExit;
-
     [SerializeField]
     UltEvent callbackEvent;
-
-
     [SerializeField]
     IncludeExcludeColliders includeOrExcludeColliders = IncludeExcludeColliders.Exclude;
-
     [SerializeField]
     List<Collider> colliders = new List<Collider>();
-
-
 
     public enum IncludeExcludeColliders
     {
@@ -37,12 +32,10 @@ public class CollisionEvent : MonoBehaviour, ICallbackEvent
         CheckCollider(collision.collider, onCollisionEnter);
     }
 
-
     void OnCollisionStay(Collision collision)
     {
         CheckCollider(collision.collider, onCollisionStay);
     }
-
 
     void OnCollisionExit(Collision collision)
     {

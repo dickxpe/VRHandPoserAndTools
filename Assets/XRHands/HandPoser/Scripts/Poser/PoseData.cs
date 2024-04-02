@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// Author: Cody Tedrick https://github.com/ctedrick
+// MIT License - Copyright (c) 2024 Cody Tedric
+
+using UnityEngine;
 
 namespace InteractionsToolkit.Poser
 {

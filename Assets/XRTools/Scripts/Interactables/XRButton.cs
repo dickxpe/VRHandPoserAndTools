@@ -1,35 +1,25 @@
-using System;
-using System.Drawing;
+// Author: Peter Dickx https://github.com/dickxpe
+// MIT License - Copyright (c) 2024 Peter Dickx
+
 using UnityEngine;
-using UnityEngine.Events;
 using UltEvents;
 
 public class XRButton : MonoBehaviour, ICallbackEvent
 {
-
     [SerializeField]
     float pressTreshold;
-
     [SerializeField]
     float maxPress;
-
     [SerializeField]
     UltEvent downEvent;
-
     [SerializeField]
     UltEvent upEvent;
-
     [SerializeField]
     UltEvent callbackEvent;
-
     bool pressed;
-
     float distance;
-
     Vector3 startPos;
-
     Transform knob;
-
     bool upEventCanTrigger = false;
 
     void Start()
