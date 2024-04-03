@@ -151,7 +151,7 @@ namespace UltEvents
             // Type Name.
             AppendNameAndGenericArguments(text, type, fullName, genericArguments);
 
-            Return:// Remember and return the name.
+        Return:// Remember and return the name.
             name = text.ToString();
             names.Add(type, name);
             return name;
@@ -458,7 +458,7 @@ namespace UltEvents
                 case 0: return "1st";
                 case 1: return "2nd";
                 case 2: return "3rd";
-                default: return index + "th";
+                default: return index + 1 + "th";
             }
         }
 
