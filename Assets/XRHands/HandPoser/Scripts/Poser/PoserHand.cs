@@ -21,6 +21,9 @@ namespace InteractionsToolkit.Poser
         public Handedness Type;
         public Transform AttachTransform;
 
+        public GameObject ghostHandGameObject;
+
+        [HideInInspector]
         public PoserHand ghostHand;
 
         private List<Coroutine> PoseCoroutines = new List<Coroutine>();
@@ -49,6 +52,11 @@ namespace InteractionsToolkit.Poser
 
         private void Awake()
         {
+
+            if (ghostHandGameObject != null)
+            {
+                ghostHand = ghostHandGameObject.GetComponent<PoserHand>();
+            }
             if (handJoints == null || handJoints.GetTotalJointCount() == 0)
             {
                 Debug.LogError($"{nameof(handJoints)} is null or empty. Check {name}");

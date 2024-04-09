@@ -2,6 +2,7 @@
 // Edited by: Peter Dickx https://github.com/dickxpe
 // MIT License - Copyright (c) 2024 Cody Tedrick - Copyright (c) 2024 Peter Dickx
 
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,20 +15,60 @@ namespace InteractionsToolkit.Poser
 
         private const float Radius = 0.005f;
         private const float ClickRadius = 0.005f;
-
-        private bool isEditing;
         private string editButtonText;
         bool isFirstHandle = false;
 
-        public void SetIsEditing(bool isEditing)
+        public bool isEditing;
+
+        string[] searchFingers = { "thumb", "index", "middle", "ring", "pinky" };
+
+        public void recursiveFingerSearch(Transform t)
         {
-            this.isEditing = isEditing;
+            foreach (Transform child in t)
+            {
+                Debug.Log(child.name);
+
+                for (int i = 0; i < searchFingers.Length; i++)
+                {
+                    if (child.gameObject.name.Contains(searchFingers[i]))
+                    {
+                        if (poserHand.HandJoints.jointGroups[i].joints.Count < 3)
+                        {
+                            poserHand.HandJoints.jointGroups[i].joints.Add(child);
+                        }
+                    }
+                }
+                recursiveFingerSearch(child);
+            }
+
         }
+
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            Color defaultColor = GUI.color;
+
             poserHand = target as PoserHand;
+
+            base.OnInspectorGUI();
+
+            GUI.color = Color.cyan;
+
+            editButtonText = "Assign joints automatically";
+
+            if (GUILayout.Button(editButtonText, EditorStyles.miniButton))
+            {
+                poserHand.HandJoints.jointGroups = new List<HandJointGroup>();
+                for (int i = 0; i < 5; i++)
+                {
+                    HandJointGroup handJointGroup = new HandJointGroup();
+                    handJointGroup.joints = new List<Transform>();
+                    poserHand.HandJoints.jointGroups.Add(handJointGroup);
+                }
+                recursiveFingerSearch(poserHand.transform);
+            }
+
+            GUI.color = defaultColor;
 
             if (poserHand.gameObject.tag != "Gamehand")
             {
@@ -58,11 +99,13 @@ namespace InteractionsToolkit.Poser
 
         private void OnSceneGUI()
         {
+            poserHand = target as PoserHand;
+
             if (!poserHand.isEditing) return;
 
             HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
 
-            poserHand = target as PoserHand;
+
 
             if (!poserHand) return;
             var lookRotation = Quaternion.LookRotation(Camera.current.transform.forward);

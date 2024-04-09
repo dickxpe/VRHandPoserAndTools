@@ -173,7 +173,7 @@ namespace InteractionsToolkit.Poser
             ShowPose();
         }
 
-        private bool CheckParentGameObjectExists(ref GameObject parentGO, string goName, ref PoserHand poserHand, PoserHand prefab)
+        private bool CheckParentGameObjectExists(ref GameObject parentGO, string goName, ref PoserHand poserHand, GameObject prefab)
         {
             if (!parentGO)
             {
@@ -183,7 +183,7 @@ namespace InteractionsToolkit.Poser
                 parentGO.transform.SetParent(poseGameObject.transform);
                 parentGO.name += " ---Rotate & Position Me---";
 
-                poserHand = Instantiate(prefab, parentGO.transform);
+                poserHand = Instantiate(prefab, parentGO.transform).GetComponent<PoserHand>();
                 var poserHandTransform = poserHand.transform;
                 poserHandTransform.localPosition = Vector3.zero;
                 poserHandTransform.localRotation = Quaternion.identity;

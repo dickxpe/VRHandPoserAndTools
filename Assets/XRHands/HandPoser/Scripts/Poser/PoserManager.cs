@@ -2,6 +2,7 @@
 // MIT License - Copyright (c) 2024 Cody Tedrick
 
 using InteractionsToolkit.Utility;
+using UnityEditor;
 using UnityEngine;
 
 namespace InteractionsToolkit.Poser
@@ -16,8 +17,8 @@ namespace InteractionsToolkit.Poser
         public PoserHand RightPoserHand;
 
         [Header("Asset Hands")]
-        public PoserHand LeftPrefab;
-        public PoserHand RightPrefab;
+        public GameObject LeftPrefab;
+        public GameObject RightPrefab;
 
         protected override void Awake()
         {
@@ -25,14 +26,39 @@ namespace InteractionsToolkit.Poser
 
             if (!LeftPoserHand)
             {
-                Debug.LogWarning($"{nameof(LeftPoserHand)} is null, check reference on {gameObject}");
-                enabled = false;
+                Transform parent = transform.Find("XR Origin (XR Rig)/Camera Offset/Left Controller");
+                LeftPoserHand = ((GameObject)Instantiate(LeftPrefab, parent)).GetComponent<PoserHand>();
+                LeftPoserHand.gameObject.name = "Left hand";
+                if (PrefabUtility.GetPrefabInstanceStatus(LeftPoserHand.ghostHandGameObject) == PrefabInstanceStatus.NotAPrefab && PrefabUtility.GetPrefabAssetType(LeftPoserHand.ghostHandGameObject) != PrefabAssetType.NotAPrefab)
+                {
+                    LeftPoserHand.ghostHandGameObject = Instantiate(LeftPoserHand.ghostHandGameObject, LeftPoserHand.transform.parent);
+                    LeftPoserHand.ghostHandGameObject.name = "Left Ghost Hand";
+                    LeftPoserHand.ghostHand = LeftPoserHand.ghostHandGameObject.GetComponent<PoserHand>();
+                    LeftPoserHand.ghostHandGameObject.SetActive(false);
+                }
+                else
+                {
+                    LeftPoserHand.ghostHand.transform.SetParent(LeftPoserHand.transform.parent);
+                }
+
             }
 
             if (!RightPoserHand)
             {
-                Debug.LogWarning($"{nameof(RightPoserHand)} is null, check reference on {gameObject}");
-                enabled = false;
+                Transform parent = transform.Find("XR Origin (XR Rig)/Camera Offset/Right Controller");
+                RightPoserHand = ((GameObject)Instantiate(RightPrefab, parent)).GetComponent<PoserHand>();
+                RightPoserHand.gameObject.name = "Right hand";
+                if (PrefabUtility.GetPrefabInstanceStatus(RightPoserHand.ghostHandGameObject) == PrefabInstanceStatus.NotAPrefab && PrefabUtility.GetPrefabAssetType(RightPoserHand.ghostHandGameObject) != PrefabAssetType.NotAPrefab)
+                {
+                    RightPoserHand.ghostHandGameObject = Instantiate(RightPoserHand.ghostHandGameObject, RightPoserHand.transform.parent);
+                    RightPoserHand.ghostHandGameObject.name = "Right Ghost Hand";
+                    RightPoserHand.ghostHand = RightPoserHand.ghostHandGameObject.GetComponent<PoserHand>();
+                    RightPoserHand.ghostHandGameObject.SetActive(false);
+                }
+                else
+                {
+                    RightPoserHand.ghostHand.transform.SetParent(RightPoserHand.transform.parent);
+                }
             }
         }
 

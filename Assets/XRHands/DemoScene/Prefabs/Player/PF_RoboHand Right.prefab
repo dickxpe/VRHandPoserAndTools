@@ -91,15 +91,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9166093650228573422}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.037078023, y: 0.04095804, z: -0.64441806, w: 0.76267487}
+  m_LocalPosition: {x: -0.0025, y: -0.044, z: -0.1634}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6590030888106082547}
   - {fileID: 7734965364164914891}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.216, y: 6.331, z: -80.404}
 --- !u!114 &4239409657511421326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,9 +112,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c411e95db7489c94ee983ad57c1f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGameHand: 0
+  isEditing: 0
   Type: 1
   AttachTransform: {fileID: 7734965364164914891}
+  ghostHandGameObject: {fileID: 3002470201093218037, guid: 7f8ed950083a5d24a97c31f24d761047,
+    type: 3}
   ghostHand: {fileID: 0}
   handJoints:
     jointGroups:
@@ -150,9 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5817b2d1f94127979e7065cb09a6b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primary: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  primary: {fileID: 187161793506945269, guid: ba2b363a09ef6af4ca16023f1cd666e8, type: 3}
   interactionManager: {fileID: 0}
-  defaultPose: {fileID: 11400000, guid: aef5b0397949b63429ca7d36939fbd00, type: 2}
+  defaultPose: {fileID: 11400000, guid: 8d7c2258f39f6a442b1da175f8bf7fe1, type: 2}
   poserHand: {fileID: 4239409657511421326}
 --- !u!135 &5371598495982997502
 SphereCollider:
@@ -198,7 +200,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
+    m_Reference: {fileID: -7813013294023911475, guid: ba2b363a09ef6af4ca16023f1cd666e8,
       type: 3}
   grabAnimationAction:
     m_UseReference: 1
@@ -211,7 +213,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f,
+    m_Reference: {fileID: -1758520528963094988, guid: ba2b363a09ef6af4ca16023f1cd666e8,
       type: 3}
   thumbAnimationAction:
     m_UseReference: 1
@@ -224,7 +226,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 4165045470603859838, guid: c348712bda248c246b8c49b3db54643f,
+    m_Reference: {fileID: 4165045470603859838, guid: ba2b363a09ef6af4ca16023f1cd666e8,
       type: 3}
   IndexAnimationAction:
     m_UseReference: 1
@@ -237,7 +239,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: -707863742804175959, guid: c348712bda248c246b8c49b3db54643f,
+    m_Reference: {fileID: 7904272356298805229, guid: ba2b363a09ef6af4ca16023f1cd666e8,
       type: 3}
   openPose: {fileID: 11400000, guid: 8d7c2258f39f6a442b1da175f8bf7fe1, type: 2}
   closedPose: {fileID: 11400000, guid: b35f460194ea6dd46a29f45366cb07c7, type: 2}

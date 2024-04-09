@@ -47,8 +47,12 @@ namespace InteractionsToolkit.Core
         {
             if (!interactionManager)
             {
-                Debug.LogError($"{nameof(InteractionManager)} is null. Add reference on {gameObject.name}");
-                return;
+                interactionManager = GetComponentInParent<InteractionManager>();
+                if (!interactionManager)
+                {
+                    Debug.LogError($"{nameof(InteractionManager)} is null. Add reference on {gameObject.name}");
+                    return;
+                }
             }
 
             interactionManager.RegisterInteractor(this);

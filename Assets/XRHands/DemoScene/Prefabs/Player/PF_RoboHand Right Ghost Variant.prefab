@@ -40,6 +40,11 @@ PrefabInstance:
       propertyPath: isGameHand
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4239409657511421326, guid: 15a8cd861aa206941b478954ca01105c,
+        type: 3}
+      propertyPath: ghostHandGameObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4439562005676448251, guid: 15a8cd861aa206941b478954ca01105c,
         type: 3}
       propertyPath: m_TagString
