@@ -177,7 +177,15 @@ namespace EventVisualizer.Base
 		{
 			if (_graph != null)
 			{
-				_graph.RebuildGraph(Selection.gameObjects, searchHierarchy);
+
+				if (roots != null)
+				{
+					_graph.RebuildGraph(roots, searchHierarchy);
+				}
+				else
+				{
+					_graph.RebuildGraph(Selection.gameObjects, searchHierarchy);
+				}
 			}
 		}
 

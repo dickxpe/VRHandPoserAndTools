@@ -12,8 +12,9 @@ namespace InteractionsToolkit.Poser
         [Header("Pose Asset")]
         public PoseData DefaultPose;
 
-        [Header("Scene Hands")]
+        [HideInInspector]
         public PoserHand LeftPoserHand;
+        [HideInInspector]
         public PoserHand RightPoserHand;
 
         [Header("Asset Hands")]

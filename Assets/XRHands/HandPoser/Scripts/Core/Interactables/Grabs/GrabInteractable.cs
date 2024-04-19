@@ -31,8 +31,9 @@ namespace InteractionsToolkit.Core
 
                 if (ObjectToHand)
                 {
-                    poserHand.SetPose(pose, poseDuration);
                     ApplyAttachmentTransform(parentTransform, poserHand.AttachTransform);
+                    poserHand.SetPose(pose, poseDuration);
+
                     transform.SetParent(poserHand.AttachTransform);
 
                     StopAllCoroutines();

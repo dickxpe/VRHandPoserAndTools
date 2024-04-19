@@ -262,7 +262,7 @@ namespace InteractionsToolkit.Poser
         private static void MirrorHand(Transform source, Transform copy)
         {
             var localPosition = source.localPosition;
-            var newPosition = new Vector3(copy.localPosition.x, localPosition.y, localPosition.z);
+            var newPosition = new Vector3(-localPosition.x, localPosition.y, localPosition.z);
             copy.localPosition = newPosition;
 
             var localRotation = source.localRotation;

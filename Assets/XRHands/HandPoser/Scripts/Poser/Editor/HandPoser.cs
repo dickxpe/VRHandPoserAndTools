@@ -165,81 +165,97 @@ namespace InteractionsToolkit.Poser
 
         void OnGUI()
         {
+            defaultColor = GUI.color;
             if (selectedGameObject != null)
             {
-                defaultColor = GUI.color;
-                if (!FindObjectOfType<PoserManager>())
+                if (selectedGameObject.transform.localScale.x != selectedGameObject.transform.localScale.y || selectedGameObject.transform.localScale.x != selectedGameObject.transform.localScale.z)
                 {
-                    GUILayout.Label("First add a PoserManager to your scene", EditorStyles.boldLabel);
-                    EditorGUILayout.Space();
-
-                    if (GUILayout.Button("Create PoserManager", EditorStyles.miniButton))
-                    {
-                        GameObject poserManager = new GameObject("PoserManager");
-                        poserManager.AddComponent<PoserManager>();
-                    }
+                    GUILayout.Label("Can't create a pose for a non-uniform scaled object", EditorStyles.boldLabel);
+                    GUILayout.Label("Set the scale to a uniform value", EditorStyles.boldLabel);
+                    GUILayout.Label("or create an empty parent object with scale 1,1,1", EditorStyles.boldLabel);
                 }
-                else if (selectedGameObject != null)
-                {
-                    Undo.RecordObject(selectedGameObject, "Value changed");
-                    EditorGUI.BeginChangeCheck();
-                    selectedGameObject = (GameObject)EditorGUILayout.ObjectField(selectedGameObject, typeof(GameObject), true);
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        poserTool.PoseData = selectedGameObject.GetComponent<IHandPose>().PrimaryPose;
-                        Debug.Log("Objectfield" + selectedGameObject.name);
 
-                    }
-                    GUILayout.Label("PoseData", EditorStyles.boldLabel);
-                    EditorGUI.BeginChangeCheck();
-                    poserTool.PoseData = (PoseData)EditorGUILayout.ObjectField(poserTool.PoseData, typeof(PoseData), true);
-                    if (EditorGUI.EndChangeCheck())
+
+                else
+                {
+                    if (!FindObjectOfType<PoserManager>())
                     {
-                        HandPose handPose = (HandPose)selectedGameObject.GetComponent<IHandPose>();
-                        if (handPose != null)
+                        GUILayout.Label("First add a PoserManager to your scene", EditorStyles.boldLabel);
+                        EditorGUILayout.Space();
+
+                        if (GUILayout.Button("Create PoserManager", EditorStyles.miniButton))
                         {
-                            handPose.PrimaryPose = poserTool.PoseData;
+                            GameObject poserManager = new GameObject("PoserManager");
+                            poserManager.AddComponent<PoserManager>();
+                        }
+                    }
+                    else if (selectedGameObject != null)
+                    {
+                        Undo.RecordObject(selectedGameObject, "Value changed");
+                        EditorGUI.BeginChangeCheck();
+                        selectedGameObject = (GameObject)EditorGUILayout.ObjectField(selectedGameObject, typeof(GameObject), true);
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            poserTool.PoseData = selectedGameObject.GetComponent<IHandPose>().PrimaryPose;
+                            Debug.Log("Objectfield" + selectedGameObject.name);
+
+                        }
+                        GUILayout.Label("PoseData", EditorStyles.boldLabel);
+                        EditorGUI.BeginChangeCheck();
+                        poserTool.PoseData = (PoseData)EditorGUILayout.ObjectField(poserTool.PoseData, typeof(PoseData), true);
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            IHandPose handPose = selectedGameObject.GetComponent<IHandPose>();
+                            if (handPose != null)
+                            {
+                                handPose.PrimaryPose = poserTool.PoseData;
+                            }
+
                         }
 
-                    }
+                        EditorGUILayout.Space();
 
-                    EditorGUILayout.Space();
-
-                    if (poserTool.HandExists())
-                    {
-                        GUI.color = Color.red;
-                        if (GUILayout.Button("Remove Hand(s)", EditorStyles.miniButton))
+                        if (poserTool.HandExists())
                         {
-                            ResetScrubValue(1);
-                            poserTool.AddOrRemoveHands();
+                            GUI.color = Color.red;
+                            if (GUILayout.Button("Remove Hand(s)", EditorStyles.miniButton))
+                            {
+                                ResetScrubValue(1);
+                                poserTool.AddOrRemoveHands();
+                                DestroyImmediate(selectedGameObject.GetComponent<HandPose>());
+
+                            }
+                        }
+                        else
+                        {
+                            GUI.color = Color.green;
+                            if (GUILayout.Button("Create Hands", EditorStyles.miniButton))
+                            {
+                                if (selectedGameObject.GetComponent<IHandPose>() == null)
+                                {
+                                    selectedGameObject.AddComponent<HandPose>().PrimaryPose = poserTool.PoseData;
+                                }
+                                ResetScrubValue(1);
+                                poserTool.AddOrRemoveHands();
+                                SceneView.lastActiveSceneView.LookAt(selectedGameObject.transform.position);
+                            }
+                        }
+                        GUI.color = defaultColor;
+
+                        if (poserTool.leftHandParent || poserTool.rightHandParent)
+                        {
+
+                            DrawPlaybackSection();
+                            DrawEditSection();
+                            DrawSaveSection();
                         }
                     }
                     else
                     {
-                        GUI.color = Color.green;
-                        if (GUILayout.Button("Create Hands", EditorStyles.miniButton))
-                        {
-                            ResetScrubValue(1);
-                            poserTool.AddOrRemoveHands();
-                            SceneView.lastActiveSceneView.LookAt(selectedGameObject.transform.position);
-                        }
+                        GUILayout.Label("No Pose selected", EditorStyles.boldLabel);
                     }
-                    GUI.color = defaultColor;
-
-                    if (poserTool.leftHandParent || poserTool.rightHandParent)
-                    {
-
-                        DrawPlaybackSection();
-                        DrawEditSection();
-                        DrawSaveSection();
-                    }
-                }
-                else
-                {
-                    GUILayout.Label("No Pose selected", EditorStyles.boldLabel);
                 }
             }
-
         }
 
         private void DrawPlaybackSection()
@@ -314,13 +330,11 @@ namespace InteractionsToolkit.Poser
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Toggle", EditorStyles.miniButton))
             {
-                ResetScrubValue(1);
                 poserTool.ToggleLeftHand();
             }
 
             if (GUILayout.Button("Toggle", EditorStyles.miniButton))
             {
-                ResetScrubValue(1);
                 poserTool.ToggleRightHand();
             }
 
@@ -435,7 +449,6 @@ namespace InteractionsToolkit.Poser
             {
 
                 poserTool.MirrorLeftToRight();
-                ResetScrubValue(1);
             }
             GUI.enabled = true;
 
@@ -448,7 +461,6 @@ namespace InteractionsToolkit.Poser
             {
 
                 poserTool.MirrorRightToLeft();
-                ResetScrubValue(1);
             }
             GUI.enabled = true;
 

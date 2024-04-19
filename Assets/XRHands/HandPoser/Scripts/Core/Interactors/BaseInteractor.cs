@@ -50,7 +50,7 @@ namespace InteractionsToolkit.Core
                 interactionManager = GetComponentInParent<InteractionManager>();
                 if (!interactionManager)
                 {
-                    Debug.LogError($"{nameof(InteractionManager)} is null. Add reference on {gameObject.name}");
+                    Debug.LogError($"{nameof(InteractionManager)} is null,  Add reference on {gameObject.transform.parent.parent.name + "/" + gameObject.transform.parent.name + "/" + gameObject.name}");
                     return;
                 }
             }
@@ -63,11 +63,13 @@ namespace InteractionsToolkit.Core
         protected void HandleHoverEnter(BaseInteractable interactable)
         {
             interactionManager.HandleHoverEnter(this, interactable);
+            interactable.hoverEntered.Invoke(null);
         }
 
         protected void HandleHoverExit(BaseInteractable interactable)
         {
             interactionManager.HandleHoverExit(this, interactable);
+            interactable.hoverExited.Invoke(null);
         }
 
         private void TryToInteract()
@@ -103,6 +105,7 @@ namespace InteractionsToolkit.Core
                 iRigidBody.isKinematic = true;
                 iRigidBody.useGravity = false;
             }
+            interactable.selectEntered.Invoke(null);
 
 
 
@@ -119,6 +122,7 @@ namespace InteractionsToolkit.Core
                 iRigidBody.isKinematic = false;
                 iRigidBody.useGravity = true;
             }
+            interactable.selectExited.Invoke(null);
         }
     }
 }
