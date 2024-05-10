@@ -685,7 +685,7 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_AttachTransform: {fileID: 258924283}
+  m_AttachTransform: {fileID: 0}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -735,8 +735,8 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  ObjectToHand: 0
-  pose: {fileID: 11400000, guid: 0950b3eb34e038c4a841b29168d00b02, type: 2}
+  ObjectToHand: 1
+  pose: {fileID: 0}
   AttachDuration: 0.2
   enableDefaultAnimations: 0
 --- !u!1 &800339861

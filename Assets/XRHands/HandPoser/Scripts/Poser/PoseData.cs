@@ -18,7 +18,7 @@ namespace InteractionsToolkit.Poser
             LeftJoints = leftData;
             LeftParentTransform = new PoseTransform
             {
-                LocalPosition = leftParent.localPosition,//new Vector3(leftParent.localPosition.x / leftParent.localScale.x, leftParent.localPosition.y / leftParent.localScale.y, leftParent.localPosition.z / leftParent.localScale.z),
+                LocalPosition = new Vector3(leftParent.localPosition.x / leftParent.localScale.x, leftParent.localPosition.y / leftParent.localScale.y, leftParent.localPosition.z / leftParent.localScale.z),
                 LocalRotation = leftParent.localRotation
             };
 
@@ -29,7 +29,7 @@ namespace InteractionsToolkit.Poser
             RightJoints = rightData;
             RightParentTransform = new PoseTransform
             {
-                LocalPosition = rightParent.localPosition, //new Vector3(rightParent.localPosition.x / rightParent.localScale.x, rightParent.localPosition.y / rightParent.localScale.y, rightParent.localPosition.z / rightParent.localScale.z),
+                LocalPosition = new Vector3(rightParent.localPosition.x / rightParent.localScale.x, rightParent.localPosition.y / rightParent.localScale.y, rightParent.localPosition.z / rightParent.localScale.z),
                 LocalRotation = rightParent.localRotation
             };
         }

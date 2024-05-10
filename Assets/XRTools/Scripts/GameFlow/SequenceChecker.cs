@@ -17,6 +17,11 @@ public class SequenceChecker : MonoBehaviour
     bool sequenceCompleted;
     int position = 0;
 
+    public void CheckSequence(int id)
+    {
+        CheckSequence(id, null);
+    }
+
     public void CheckSequence(int id, GameObject gameObject)
     {
         if (!sequenceCompleted)
@@ -25,7 +30,10 @@ public class SequenceChecker : MonoBehaviour
             if (sequence[position] == id)
             {
                 checkCorrectEvent.Invoke();
-                gameObject.GetComponent<ICallbackEvent>().CallBack();
+                if (gameObject != null)
+                {
+                    gameObject.GetComponent<ICallbackEvent>().CallBack();
+                }
                 position++;
                 if (position == sequence.Length)
                 {

@@ -9,10 +9,13 @@ namespace InteractionsToolkit.Core
 {
     public class GrabInteractable : BaseInteractable
     {
+        PoserHand poserHand;
+        bool followHand = false;
         protected static void DetachInteractable(Transform interactable) => interactable.SetParent(null);
 
         protected void SetPose(PoserHand poserHand, PoseData poseData, float poseDuration)
         {
+            this.poserHand = poserHand;
             HandPoseJoints pose;
             PoseTransform parentTransform;
             if (poseData != null)
@@ -49,6 +52,8 @@ namespace InteractionsToolkit.Core
                     {
                         renderer.enabled = false;
                     }
+                    followHand = true;
+                    // transform.SetParent(poserHand.AttachTransform);
                     poserHand.ghostHand.gameObject.SetActive(true);
                     poserHand.ghostHand.transform.SetParent(null);
                     poserHand.ghostHand.SetPose(pose, poseDuration);
@@ -58,7 +63,7 @@ namespace InteractionsToolkit.Core
                     }
                     else
                     {
-                        poserHand.ghostHand.GetComponent<GhostHand>().followObject = transform;
+                        poserHand.ghostHand.GetComponent<GhostHand>().followObject = colliders[0].transform;
                     }
                     // poserHand.ghostHand.transform.SetParent(transform, true);
                     ApplyHandTransform(poserHand.ghostHand.transform, poserHand.AttachTransform);
@@ -67,6 +72,21 @@ namespace InteractionsToolkit.Core
 
                 }
             }
+        }
+
+        public void Update()
+        {
+            if (followHand)
+            {
+                transform.position = poserHand.transform.position;
+                transform.rotation = poserHand.transform.rotation;
+            }
+        }
+
+        public override void HandleSelectExit(BaseInteractor interactor)
+        {
+            base.HandleSelectExit(interactor);
+            followHand = false;
         }
 
         protected static IEnumerator AttachHandRoutine(Transform target, Vector3 positionEnd, Quaternion rotationEnd, float attachDuration)
