@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/XRTools/DemoScene/TestVRComponents.unity
     guid: a593a08f896a0ba4bacc9f257fb066fc
   m_configObjects:
@@ -17,3 +17,4 @@ EditorBuildSettings:
       type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 30d2abe6739258942b0f68a176c759df,
       type: 2}
+  m_UseUCBPForAssetBundles: 0

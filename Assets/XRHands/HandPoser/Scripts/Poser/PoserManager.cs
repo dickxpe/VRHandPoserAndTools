@@ -31,6 +31,7 @@ namespace InteractionsToolkit.Poser
                 Transform parent = transform.Find("XR Origin (XR Rig)/Camera Offset/Left Controller");
                 LeftPoserHand = ((GameObject)Instantiate(LeftPrefab, parent)).GetComponent<PoserHand>();
                 LeftPoserHand.gameObject.name = "Left hand";
+#if UNITY_EDITOR
                 if (PrefabUtility.GetPrefabInstanceStatus(LeftPoserHand.ghostHandGameObject) == PrefabInstanceStatus.NotAPrefab && PrefabUtility.GetPrefabAssetType(LeftPoserHand.ghostHandGameObject) != PrefabAssetType.NotAPrefab)
                 {
                     LeftPoserHand.ghostHandGameObject = Instantiate(LeftPoserHand.ghostHandGameObject, LeftPoserHand.transform.parent);
@@ -40,9 +41,11 @@ namespace InteractionsToolkit.Poser
                 }
                 else
                 {
+#endif
                     LeftPoserHand.ghostHand.transform.SetParent(LeftPoserHand.transform.parent);
+#if UNITY_EDITOR
                 }
-
+#endif
             }
 
             if (!RightPoserHand)
@@ -50,6 +53,7 @@ namespace InteractionsToolkit.Poser
                 Transform parent = transform.Find("XR Origin (XR Rig)/Camera Offset/Right Controller");
                 RightPoserHand = ((GameObject)Instantiate(RightPrefab, parent)).GetComponent<PoserHand>();
                 RightPoserHand.gameObject.name = "Right hand";
+#if UNITY_EDITOR
                 if (PrefabUtility.GetPrefabInstanceStatus(RightPoserHand.ghostHandGameObject) == PrefabInstanceStatus.NotAPrefab && PrefabUtility.GetPrefabAssetType(RightPoserHand.ghostHandGameObject) != PrefabAssetType.NotAPrefab)
                 {
                     RightPoserHand.ghostHandGameObject = Instantiate(RightPoserHand.ghostHandGameObject, RightPoserHand.transform.parent);
@@ -59,8 +63,11 @@ namespace InteractionsToolkit.Poser
                 }
                 else
                 {
+#endif
                     RightPoserHand.ghostHand.transform.SetParent(RightPoserHand.transform.parent);
+#if UNITY_EDITOR
                 }
+#endif
             }
         }
 

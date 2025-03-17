@@ -1,11 +1,7 @@
 // Author: Peter Dickx https://github.com/dickxpe
 // MIT License - Copyright (c) 2024 Peter Dickx
 
-using System;
 using System.Collections.Generic;
-using System.Reflection;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace com.zebugames.meantween.ult
