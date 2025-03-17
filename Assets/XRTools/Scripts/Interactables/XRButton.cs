@@ -15,7 +15,10 @@ public class XRButton : MonoBehaviour, ICallbackEvent
     [SerializeField]
     UltEvent upEvent;
     [SerializeField]
-    UltEvent callbackEvent;
+    UltEvent callbackTrueEvent;
+
+    [SerializeField]
+    UltEvent callbackFalseEvent;
     bool pressed;
     float distance;
     Vector3 startPos;
@@ -63,8 +66,15 @@ public class XRButton : MonoBehaviour, ICallbackEvent
         }
     }
 
-    public void CallBack()
+    public void CallBack(bool status)
     {
-        callbackEvent.Invoke();
+        if (status)
+        {
+            callbackTrueEvent.Invoke();
+        }
+        else
+        {
+            callbackFalseEvent.Invoke();
+        }
     }
 }

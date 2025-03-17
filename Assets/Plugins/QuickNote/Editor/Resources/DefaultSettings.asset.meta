@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d1e7d7bf042cf4949a02f80499cd0bdc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 298472
+  packageName: Quick Notes
+  packageVersion: 1.1
+  assetPath: Assets/Plugins/QuickNote/Editor/Resources/DefaultSettings.asset
+  uploadId: 727450

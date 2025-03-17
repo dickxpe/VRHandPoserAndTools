@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: f428fddd085d4aa2ba678d7176b6e897
+timeCreated: 1732358431
+AssetOrigin:
+  serializedVersion: 1
+  productId: 298472
+  packageName: Quick Notes
+  packageVersion: 1.1
+  assetPath: Assets/Plugins/QuickNote/Editor/Scripts/Utility/QColor.cs
+  uploadId: 727450

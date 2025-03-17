@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 09f7d0212757487e9760a1327ea7f0c4
+timeCreated: 1730985381
+AssetOrigin:
+  serializedVersion: 1
+  productId: 298472
+  packageName: Quick Notes
+  packageVersion: 1.1
+  assetPath: Assets/Plugins/QuickNote/Editor/Scripts/GUI/QuickNoteWindow.cs
+  uploadId: 727450

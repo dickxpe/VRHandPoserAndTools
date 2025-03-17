@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 7f4c2d0b5f7341b580da0d1d63734c52
+timeCreated: 1732361004
+AssetOrigin:
+  serializedVersion: 1
+  productId: 298472
+  packageName: Quick Notes
+  packageVersion: 1.1
+  assetPath: Assets/Plugins/QuickNote/Editor/Scripts/Utility/QuickNoteDoubleClickDetector.cs
+  uploadId: 727450

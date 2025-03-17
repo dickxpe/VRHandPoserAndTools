@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 52478652c47f05840b109a8a8f9b6583
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 298472
+  packageName: Quick Notes
+  packageVersion: 1.1
+  assetPath: Assets/Plugins/QuickNote/Editor/Scripts/GUI/QuickNoteMenu.cs
+  uploadId: 727450

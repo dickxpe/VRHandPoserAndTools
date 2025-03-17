@@ -6,12 +6,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class SocketEnabler : MonoBehaviour
 {
-    XRSocketInteractor xRSocketInteractor;
+    UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor xRSocketInteractor;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
-        xRSocketInteractor = GetComponent<XRSocketInteractor>();
+        xRSocketInteractor = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -23,7 +23,7 @@ public class SocketEnabler : MonoBehaviour
         }
         else
         {
-            SphereCollider[] sphereColliders = args.interactable.gameObject.GetComponents<SphereCollider>();
+            SphereCollider[] sphereColliders = args.interactableObject.transform.gameObject.GetComponents<SphereCollider>();
             foreach (SphereCollider sphereCollider in sphereColliders)
             {
                 sphereCollider.enabled = false;
@@ -36,7 +36,7 @@ public class SocketEnabler : MonoBehaviour
         if (args == null)
         {
             Vector3 pos = transform.position;
-            rb.velocity = new Vector3(0f, 0f, 0f);
+            rb.linearVelocity = new Vector3(0f, 0f, 0f);
             rb.angularVelocity = new Vector3(0f, 0f, 0f);
             transform.rotation = Quaternion.identity;
             transform.position = pos;

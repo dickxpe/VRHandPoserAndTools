@@ -5,6 +5,9 @@ using JetBrains.Annotations;
 using InteractionsToolkit.Poser;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.Assertions.Must;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 namespace InteractionsToolkit.Core
 {
@@ -45,6 +48,8 @@ namespace InteractionsToolkit.Core
 
         private void Start()
         {
+
+
             if (!interactionManager)
             {
                 interactionManager = GetComponentInParent<InteractionManager>();
@@ -57,13 +62,20 @@ namespace InteractionsToolkit.Core
 
             interactionManager.RegisterInteractor(this);
 
-            if (defaultPose && poserHand) poserHand.SetPose(defaultPose);
+            if (defaultPose && poserHand)
+            {
+                poserHand.SetPose(defaultPose);
+            }
         }
+
 
         protected void HandleHoverEnter(BaseInteractable interactable)
         {
             interactionManager.HandleHoverEnter(this, interactable);
-            interactable.hoverEntered.Invoke(null);
+            HoverEnterEventArgs args = new HoverEnterEventArgs();
+
+            args.interactableObject = interactable;
+            interactable.hoverEntered.Invoke(new HoverEnterEventArgs());
         }
 
         protected void HandleHoverExit(BaseInteractable interactable)
@@ -101,9 +113,12 @@ namespace InteractionsToolkit.Core
         {
             if (interactable.ObjectToHand)
             {
-                Rigidbody iRigidBody = interactable.GetComponent<Rigidbody>();
-                iRigidBody.isKinematic = true;
-                iRigidBody.useGravity = false;
+                if (interactable.throwOnDetach || interactable.forceGravityOnDetach)
+                {
+                    Rigidbody iRigidBody = interactable.GetComponent<Rigidbody>();
+                    iRigidBody.isKinematic = true;
+                    iRigidBody.useGravity = false;
+                }
             }
             interactable.selectEntered.Invoke(null);
 
@@ -118,9 +133,12 @@ namespace InteractionsToolkit.Core
             //Debug.Log(interactable.gameObject.name);
             if (interactable.ObjectToHand)
             {
-                Rigidbody iRigidBody = interactable.GetComponent<Rigidbody>();
-                iRigidBody.isKinematic = false;
-                iRigidBody.useGravity = true;
+                if (interactable.throwOnDetach || interactable.forceGravityOnDetach)
+                {
+                    Rigidbody iRigidBody = interactable.GetComponent<Rigidbody>();
+                    iRigidBody.isKinematic = false;
+                    iRigidBody.useGravity = true;
+                }
             }
             interactable.selectExited.Invoke(null);
         }

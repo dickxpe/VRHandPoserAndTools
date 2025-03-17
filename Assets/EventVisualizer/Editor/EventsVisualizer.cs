@@ -8,6 +8,7 @@ using System;
 using UnityEditor.Callbacks;
 using System.Linq;
 using UltEvents;
+using TMPro;
 
 namespace EventVisualizer.Base
 {
@@ -17,13 +18,18 @@ namespace EventVisualizer.Base
 		{
 			RefreshTypesThatCanHoldUnityEvents();
 			HashSet<EventCall> calls = new HashSet<EventCall>();
+			int i = 0;
 			foreach (var type in ComponentsThatCanHaveUnityEvent)
 			{
 				if (type.IsGenericTypeDefinition)
 				{
 					continue;
 				}
-
+				if (i == 83)
+				{
+					Debug.Log("84");
+				}
+				i++;
 				HashSet<UnityEngine.Object> selectedComponents = new HashSet<UnityEngine.Object>();
 				if (roots != null && roots.Length > 0)
 				{
@@ -73,14 +79,28 @@ namespace EventVisualizer.Base
 
 			do
 			{
+
+
 				SerializedProperty persistentCalls;
 				bool isUltEvent = false;
-				if (iterator.type.Equals("UltEvent"))
+
+				if (iterator.type.Contains("Event"))
 				{
-					if ((int)iterator.FindPropertyRelative("_PersistentCalls.Array.size").boxedValue > 0)
+					if (caller.GetType() != typeof(TextMeshProUGUI))
 					{
-						persistentCalls = iterator.FindPropertyRelative("_PersistentCalls.Array");
-						isUltEvent = true;
+						SerializedProperty prop = iterator.FindPropertyRelative("_PersistentCalls.Array.size");
+						if (prop != null && (int)prop.boxedValue > 0)
+						{
+							persistentCalls = iterator.FindPropertyRelative("_PersistentCalls.Array");
+							isUltEvent = true;
+						}
+
+						else
+						{
+							persistentCalls = iterator.FindPropertyRelative("m_PersistentCalls.m_Calls");
+							isUltEvent = false;
+							//persistentCalls = null;
+						}
 					}
 					else
 					{
@@ -98,7 +118,7 @@ namespace EventVisualizer.Base
 				{
 					if (isUltEvent)
 					{
-						UltEvent ultEvent = Puppy.EditorHelper.GetTargetObjectOfProperty(iterator) as UltEvent;
+						UltEventBase ultEvent = Puppy.EditorHelper.GetTargetObjectOfProperty(iterator) as UltEventBase;
 						if (ultEvent != null)
 						{
 							AddEventCalls(calls, caller, ultEvent, iterator.displayName, iterator.propertyPath);
@@ -120,6 +140,7 @@ namespace EventVisualizer.Base
 					else if (iterator.depth > level) hasData = RecursivelyExtractEvents(calls, caller, iterator, iterator.depth);
 				}
 			}
+
 			while (hasData);
 			return false;
 		}
@@ -151,7 +172,7 @@ namespace EventVisualizer.Base
 			}
 		}
 
-		private static void AddEventCalls(HashSet<EventCall> calls, Component caller, UltEvent unityEvent, string eventShortName, string eventFullName)
+		private static void AddEventCalls(HashSet<EventCall> calls, Component caller, UltEventBase unityEvent, string eventShortName, string eventFullName)
 		{
 			for (int i = 0; i < unityEvent.PersistentCallsList.Count(); i++)
 			{

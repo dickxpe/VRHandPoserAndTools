@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b4d465a847d545746931e18da86d2a26
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 298472
+  packageName: Quick Notes
+  packageVersion: 1.1
+  assetPath: Assets/Plugins/QuickNote/Editor/Scripts/QuickNoteEditor.asmdef
+  uploadId: 727450

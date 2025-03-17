@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 97538046185155954}
   - component: {fileID: 1202523436874499856}
   - component: {fileID: 414827522385409688}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SimpleXRButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.128, z: 0.5}
-  m_LocalScale: {x: 0.15, y: 0.075, z: 0.15}
+  m_LocalScale: {x: 0.6, y: 0.3, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1374346412312004049}
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 8050925623031953357}
   - component: {fileID: 6035106960648903992}
   - component: {fileID: 1181774229577026104}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 7743914478251837932}
   - component: {fileID: 1544292830297329316}
   - component: {fileID: 9179546173468623221}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}

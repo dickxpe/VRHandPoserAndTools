@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 1fd9eb3abcfb471db4fe636ea208a806
+timeCreated: 1730989763
+AssetOrigin:
+  serializedVersion: 1
+  productId: 298472
+  packageName: Quick Notes
+  packageVersion: 1.1
+  assetPath: Assets/Plugins/QuickNote/Editor/Scripts/Utility/ColorPicker.cs
+  uploadId: 727450

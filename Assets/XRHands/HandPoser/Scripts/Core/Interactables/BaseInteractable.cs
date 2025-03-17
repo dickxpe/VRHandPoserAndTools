@@ -3,11 +3,11 @@
 // MIT License - Copyright (c) 2024 Cody Tedrick - Copyright (c) 2024 Peter Dickx
 
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+
 
 namespace InteractionsToolkit.Core
 {
-    public abstract class BaseInteractable : XRGrabInteractable
+    public abstract class BaseInteractable : UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
     {
         public bool AllowMultipleSelection { get; protected set; }
 
@@ -25,8 +25,11 @@ namespace InteractionsToolkit.Core
             if (ObjectToHand)
             {
                 // Remember Rigidbody settings and setup to move
-                rigidbody.isKinematic = false;
-                rigidbody.useGravity = true;
+                if (throwOnDetach || forceGravityOnDetach)
+                {
+                    rigidbody.isKinematic = false;
+                    rigidbody.useGravity = true;
+                }
             }
         }
 

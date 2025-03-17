@@ -10,7 +10,8 @@ namespace InteractionsToolkit.Poser
     public class PoserManager : Singleton<PoserManager>
     {
         [Header("Pose Asset")]
-        public PoseData DefaultPose;
+        public PoseData DefaultOpenPose;
+        public PoseData DefaultClosedPose;
 
         [HideInInspector]
         public PoserHand LeftPoserHand;
@@ -77,14 +78,14 @@ namespace InteractionsToolkit.Poser
 
         public void ApplyDefaultPose(Handedness hand)
         {
-            if (hand == Handedness.Left) LeftPoserHand.SetPose(DefaultPose.LeftJoints);
-            else RightPoserHand.SetPose(DefaultPose.RightJoints);
+            if (hand == Handedness.Left) LeftPoserHand.SetPose(DefaultOpenPose.LeftJoints);
+            else RightPoserHand.SetPose(DefaultOpenPose.RightJoints);
         }
 
         public void ApplyDefaultPose(PoserHand hand)
         {
-            if (hand.Type == Handedness.Left) LeftPoserHand.SetPose(DefaultPose.LeftJoints);
-            else RightPoserHand.SetPose(DefaultPose.RightJoints);
+            if (hand.Type == Handedness.Left) LeftPoserHand.SetPose(DefaultOpenPose.LeftJoints);
+            else RightPoserHand.SetPose(DefaultOpenPose.RightJoints);
         }
     }
 }

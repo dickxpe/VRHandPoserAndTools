@@ -68,7 +68,7 @@ namespace InteractionsToolkit.Poser
             rightHandParent.transform.localPosition = rightPosition;
         }
 
-        public void DefaultPose() => SetEditorPose(manager.DefaultPose);
+        public void DefaultPose() => SetEditorPose(manager.DefaultOpenPose);
 
         public void MirrorLeftToRight()
         {
@@ -127,8 +127,8 @@ namespace InteractionsToolkit.Poser
 
         public void ScrubPose(float value)
         {
-            if (leftHand) leftHand.SetScrubPose(manager.DefaultPose.LeftJoints, poseData.LeftJoints, value);
-            if (rightHand) rightHand.SetScrubPose(manager.DefaultPose.RightJoints, poseData.RightJoints, value);
+            if (leftHand) leftHand.SetScrubPose(manager.DefaultOpenPose.LeftJoints, poseData.LeftJoints, value);
+            if (rightHand) rightHand.SetScrubPose(manager.DefaultOpenPose.RightJoints, poseData.RightJoints, value);
         }
 
         public void SelectLeftHandParent()

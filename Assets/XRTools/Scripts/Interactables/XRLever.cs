@@ -66,7 +66,12 @@ public class XRLever : MonoBehaviour
             }
         }
 
-        value = (Mathf.Abs(min) + hinge.angle) / (max - min);
-        valueChangedEvent.Invoke(value);
+        if (!float.IsNaN(hinge.angle))
+        {
+            value = (Mathf.Abs(min) + hinge.angle) / (max - min);
+            Debug.Log(value + " => " + hinge.angle + " " + max);
+            valueChangedEvent.Invoke(value);
+        }
     }
+
 }

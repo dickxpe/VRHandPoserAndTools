@@ -20,8 +20,8 @@ MonoBehaviour:
       - LocalPosition: {x: 0, y: 0, z: 0}
         LocalRotation: {x: 0.40465987, y: -0, z: -0.000000005587936, w: 0.9144673}
       - LocalPosition: {x: 0, y: 0, z: 0}
-        LocalRotation: {x: 0.36685872, y: 0.00000000717118, z: -0.000000099331935,
-          w: 0.93027675}
+        LocalRotation: {x: 0.36685872, y: 0.0000000071711797, z: -0.00000009933193,
+          w: 0.9302767}
     - poseJoints:
       - LocalPosition: {x: 0, y: 0, z: 0}
         LocalRotation: {x: 0.20868169, y: -0.08880917, z: 0.1035842, w: 0.96841896}
@@ -35,8 +35,8 @@ MonoBehaviour:
       - LocalPosition: {x: 0, y: 0, z: 0}
         LocalRotation: {x: 0.21975893, y: -0.015266786, z: 0.0034395265, w: 0.97542876}
       - LocalPosition: {x: 0, y: 0, z: 0}
-        LocalRotation: {x: 0.72548753, y: 0.0000000037252894, z: 0.0000000016298142,
-          w: 0.6882353}
+        LocalRotation: {x: 0.7254876, y: 0.0000000037252896, z: 0.0000000016298143,
+          w: 0.68823534}
       - LocalPosition: {x: 0, y: 0, z: 0}
         LocalRotation: {x: 0.39661664, y: 0.0000000029666292, z: -0.0000000022576514,
           w: 0.91798437}
@@ -51,7 +51,7 @@ MonoBehaviour:
       - LocalPosition: {x: 0, y: 0, z: 0}
         LocalRotation: {x: 0.18591705, y: 0.09524029, z: -0.2970339, w: 0.9317377}
       - LocalPosition: {x: 0, y: 0, z: 0}
-        LocalRotation: {x: 0.7321901, y: 0.18645914, z: 0.007798842, w: 0.65503436}
+        LocalRotation: {x: 0.73219, y: 0.18645914, z: 0.007798841, w: 0.65503436}
       - LocalPosition: {x: 0, y: 0, z: 0}
         LocalRotation: {x: 0.39335063, y: -0.000000067055204, z: -0.000000007450578,
           w: 0.91938853}
@@ -63,8 +63,8 @@ MonoBehaviour:
       - LocalPosition: {x: 0, y: 0, z: 0}
         LocalRotation: {x: 0.40465987, y: -0, z: -0.000000005587936, w: 0.9144673}
       - LocalPosition: {x: 0, y: 0, z: 0}
-        LocalRotation: {x: 0.3668587, y: 0.000000007171179, z: -0.00000009933192,
-          w: 0.93027663}
+        LocalRotation: {x: 0.36685872, y: 0.0000000071711797, z: -0.00000009933193,
+          w: 0.9302767}
     - poseJoints:
       - LocalPosition: {x: 0, y: 0, z: 0}
         LocalRotation: {x: 0.20868169, y: -0.08880917, z: 0.1035842, w: 0.96841896}
@@ -99,8 +99,8 @@ MonoBehaviour:
         LocalRotation: {x: 0.39335063, y: -0.000000067055204, z: -0.000000007450578,
           w: 0.91938853}
   LeftParentTransform:
-    LocalPosition: {x: -0.10000038, y: 0, z: 0}
+    LocalPosition: {x: -0.010000038, y: 0, z: -0.097}
     LocalRotation: {x: 0, y: -0, z: -0, w: -1}
   RightParentTransform:
-    LocalPosition: {x: 0.10000038, y: 0, z: 0}
+    LocalPosition: {x: 0.010000038, y: 0, z: -0.097}
     LocalRotation: {x: -0, y: -0, z: -0, w: 1}

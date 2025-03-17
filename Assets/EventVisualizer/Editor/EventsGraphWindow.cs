@@ -77,7 +77,7 @@ namespace EventVisualizer.Base
 			// Status bar
 			GUILayout.BeginArea(new Rect(0, 0, width, kBarHeight + 5));
 			int result = GUILayout.Toolbar(-1, toolbarStrings);
-			if (result == 0) RebuildGraph(FindObjectsOfType<GameObject>(), true);
+			if (result == 0) RebuildGraph(FindObjectsByType<GameObject>(FindObjectsSortMode.None), true);
 			else if (result == 1) RebuildGraphOnSelected(true);
 			else if (result == 2) RebuildGraphOnSelected(false);
 			else if (result == 3) RefreshGraphConnections();

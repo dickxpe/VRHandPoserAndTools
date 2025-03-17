@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 7ee06f50056b495fae143a1473badc61
+timeCreated: 1732357888
+AssetOrigin:
+  serializedVersion: 1
+  productId: 298472
+  packageName: Quick Notes
+  packageVersion: 1.1
+  assetPath: Assets/Plugins/QuickNote/Editor/Scripts/GUI/QuickNoteDrawer.cs
+  uploadId: 727450

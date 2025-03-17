@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 029fbee2374c8f54d84e7b599deba82c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {fileID: 2800000, guid: 99cfebb8bcb0cba4cad6d93bed86e821, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 298472
+  packageName: Quick Notes
+  packageVersion: 1.1
+  assetPath: Assets/Plugins/QuickNote/Editor/Scripts/QuickNote.cs
+  uploadId: 727450

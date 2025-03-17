@@ -37,7 +37,10 @@ namespace InteractionsToolkit.Core
                 {
                     activeHand = newHand;
                     activeHand.SetIsPosing(!enableDefaultAnimations);
+
                     SetPose(activeHand, pose, AttachDuration);
+
+
 
                 }
             }
